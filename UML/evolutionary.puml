@@ -1,0 +1,13 @@
+@startuml
+
+' a genetic algorithm generalized for real coded chromosomes
+class RealCodedGeneticAlgorithm {
+
+}
+
+' a genetic algorithm generalized for binary coded chromosomes
+class BinaryCodedGeneticAlgorithm {
+
+}
+
+@enduml

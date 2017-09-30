@@ -1,0 +1,20 @@
+@startuml
+
+' an abstract base class for survivor selection from a population
+abstract class SurvivorSelector {
+
+}
+SurvivorSelector <|- GenerationarlSurvivorSelector
+SurvivorSelector <|- SteadyStateSurvivorSelector
+
+' a class for generational survivor selection
+class GenerationarlSurvivorSelector {
+
+}
+
+' a class for steady state survivor selection
+class SteadyStateSurvivorSelector {
+
+}
+
+@enduml

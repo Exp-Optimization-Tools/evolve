@@ -13,13 +13,14 @@ class Chromosome:
     accessed, or updated by external code.
     """
 
-    def __init__(self, size: int, evaluate: Callable):
+    def __init__(self, size: int, evaluate: Callable, **kwargs):
         """
         Initialize a new chromosome of a given size.
 
         Args:
             size: the size of the chromosome (default 0)
             evaluate: the evaluation function for the fitness (default None)
+            kwargs: keyword arguments that subclasses might use
         """
         # check the validity of the size parameter
         if not isinstance(size, (int, float)):

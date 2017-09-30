@@ -51,3 +51,9 @@ class ChromosomeFactory:
         if not isinstance(size, (int, float)) or size < 0:
             raise ValueError('size must be a positive number')
         return [self.next_individual for i in range(0, size)]
+
+
+# explicitly export the classes
+__all__ = [
+    'ChromosomeFactory'
+]

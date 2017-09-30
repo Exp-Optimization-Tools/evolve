@@ -1,5 +1,6 @@
 """This module contains test code for the binary chromosome module."""
 import unittest
+import numpy as np
 from ..chromosome import Chromosome
 from ..binary_chromosome import *
 
@@ -74,3 +75,37 @@ class ShouldCreateChromosomeWithRandoms(BinaryChromosomeTestCase):
             self.assertEqual(3, len(chrom.genes))
         except:
             self.fail('raised unexpected error!')
+
+
+#
+# MARK: Fitness
+#
+
+
+def real_evaluate(genes: np.array):
+    """A real evaluation function for testing purposes"""
+    weights = np.array([
+        10,
+        5,
+        2
+    ])
+    return np.multiply(genes, weights).sum()
+
+
+class ShouldReturnCalculatedFitnessOnes(BinaryChromosomeTestCase):
+    def runTest(self):
+        chrom = BinaryChromosome(3, real_evaluate, initial_state='ones')
+        self.assertEqual(17, chrom.fitness)
+
+
+class ShouldReturnCalculatedFitnessZeros(BinaryChromosomeTestCase):
+    def runTest(self):
+        chrom = BinaryChromosome(3, real_evaluate, initial_state='zeros')
+        self.assertEqual(0, chrom.fitness)
+
+
+class ShouldReturnCalculatedFitnessRandom(BinaryChromosomeTestCase):
+    def runTest(self):
+        chrom = BinaryChromosome(3, real_evaluate, initial_state='random')
+        self.assertTrue(0 <= chrom.fitness)
+        self.assertTrue(chrom.fitness <= 17)

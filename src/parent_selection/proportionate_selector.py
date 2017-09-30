@@ -1,8 +1,15 @@
-"""This module contains a class for proportionate parent selection."""
+"""
+This module contains a class for proportionate parent selection.
+
+The proportionate selector is susceptible to:
+*   the super individual problem
+*   loss of selection pressure as the algorithm converges
+"""
 from typing import Union
 from numpy import ndarray, sum, random
 from .parent_selector import ABCParentSelector
 
+# TODO: Update to support minimization
 
 class ProportionateSelector(ABCParentSelector):
     """A class for performing proportionate parent selection."""

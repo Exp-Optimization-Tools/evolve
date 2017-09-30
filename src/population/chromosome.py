@@ -1,5 +1,6 @@
 """This module contains a class representing an abstract chromosome."""
 from typing import Callable
+import numpy as np
 
 
 class Chromosome:
@@ -39,7 +40,7 @@ class Chromosome:
         return self._size
 
     @property
-    def evaluate(self) -> Callable[[list], float]:
+    def evaluate(self) -> Callable[[np.array], float]:
         """Return the evaluation function for the chromosome."""
         return self._evaluate
 

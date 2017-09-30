@@ -32,8 +32,8 @@ class ShouldRaiseErrorOnInvalidEvaluation(ChromosomeTestCase):
             Chromosome(0, 0)
 
 
-def arb():
-    pass
+def arb(genes):
+    return 1
 
 
 class ShouldRaiseErrorOnMissingSize(ChromosomeTestCase):
@@ -81,18 +81,24 @@ class ChromosomePropertyTestCase(ChromosomeTestCase):
 
 
 class ShouldHaveSize(ChromosomePropertyTestCase):
-
     def runTest(self):
         try:
-            self.assertEqual(self.arb.size, 10)
+            self.assertEqual(10, self.arb.size)
         except:
             self.fail('unexpected exception raised')
 
 
 class ShouldHaveEvaluate(ChromosomePropertyTestCase):
-
     def runTest(self):
         try:
-            self.assertEqual(self.arb.evaluate, arb)
+            self.assertEqual(arb, self.arb.evaluate)
+        except:
+            self.fail('unexpected exception raised')
+
+
+class ShouldHaveFitness(ChromosomePropertyTestCase):
+    def runTest(self):
+        try:
+            self.assertEqual(1, self.arb.fitness)
         except:
             self.fail('unexpected exception raised')

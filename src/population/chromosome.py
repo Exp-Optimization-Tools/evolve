@@ -30,6 +30,8 @@ class Chromosome:
         if not callable(evaluate):
             raise ValueError('evaluate must be a callable (method/function)')
         self._evaluate = evaluate
+        # setup the genes instance variable
+        self.genes = None
 
     @property
     def size(self) -> int:
@@ -37,12 +39,17 @@ class Chromosome:
         return self._size
 
     @property
-    def evaluate(self) -> Callable:
+    def evaluate(self) -> Callable[[list], float]:
         """Return the evaluation function for the chromosome."""
         return self._evaluate
 
+    @property
+    def fitness(self) -> float:
+        """Return the fitness of the gene from the evaluation function."""
+        return self._evaluate(self.genes)
 
-# explicitly import the appropriate parts
+
+# explicitly export the classes
 __all__ = [
     'Chromosome'
 ]

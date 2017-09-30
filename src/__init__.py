@@ -1,4 +1,5 @@
 """This package contains classes for running evolutionary algorithms."""
+from .population import *
 # from typing import Callable
 # from .selection import *
 # from .procreation import *

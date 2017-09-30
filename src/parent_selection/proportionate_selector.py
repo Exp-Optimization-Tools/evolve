@@ -18,10 +18,8 @@ class ProportionateSelector(ABCParentSelector):
         super(ProportionateSelector, self).select(population)
         # score every individual in the population
         scores = [individual.fitness for individual in population]
-        # calculate the sum of the scores
-        sum_score = sum(scores)
         # generate probabilities as the proportion of score to total score
-        probablities = scores / sum_score
+        probablities = scores / sum(scores)
         # return the results from the numpy choice function
         return random.choice(population, size=size, replace=replace, p=probablities)
 

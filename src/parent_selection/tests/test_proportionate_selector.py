@@ -1,7 +1,12 @@
 """This module tests the proportionate_selector module."""
 import unittest
-from numpy import array
+from numpy import array, ndarray
 from ..proportionate_selector import *
+from population import BinaryChromosome, ChromosomeFactory
+
+
+def evaluate(genes: ndarray):
+    return 1
 
 
 #
@@ -10,7 +15,11 @@ from ..proportionate_selector import *
 
 
 class ProportionateSelectorTestCase(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.factory = ChromosomeFactory(BinaryChromosome, 5,
+                                        evaluate=evaluate,
+                                        initial_state='zeros')
+        self.population = self.factory.population(10)
 
 #
 # MARK: __init__()
@@ -29,3 +38,9 @@ class ShouldRaiseErrorOnInvalidPopulationWrongType(ProportionateSelectorTestCase
         sel = ProportionateSelector()
         with self.assertRaises(TypeError):
             sel.select('asdfasdfasdf')
+
+class ShouldSelectProportionately(ProportionateSelectorTestCase):
+    def runTest(self):
+        sel = ProportionateSelector()
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.population).genes))
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.population, size=2)[0].genes))

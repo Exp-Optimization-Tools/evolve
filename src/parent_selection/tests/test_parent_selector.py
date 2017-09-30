@@ -1,7 +1,7 @@
 """This module tests the parent_selector module."""
 import unittest
 from numpy import array
-from ..parent_selector import ABCParentSelector
+from ..parent_selector import *
 
 
 #

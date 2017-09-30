@@ -3,7 +3,14 @@ from typing import Callable
 
 
 class Chromosome:
-    """This class represents a chromosome in a genetic optimization."""
+    """
+    This class represents a chromosome in a genetic optimization.
+
+    Once created, the evaluation function and size of the chromosome are
+    immutable. This is to ensure that chromosomes aren't mutated to an illegal
+    state accidentally by the external api. _size and _evaluate should not be
+    accessed, or updated by external code.
+    """
 
     def __init__(self, size: int, evaluate: Callable):
         """
@@ -20,8 +27,8 @@ class Chromosome:
             raise ValueError('cannot create chromosome with a negative size')
         self._size = size
         # validate the evaluation function
-        if not isinstance(evaluate, Callable):
-            raise ValueError('`evaluate` must be a function')
+        if not callable(evaluate):
+            raise ValueError('evaluate must be a callable (method/function)')
         self._evaluate = evaluate
 
     @property

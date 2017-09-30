@@ -14,7 +14,10 @@ from .parent_selector import ABCParentSelector
 class ProportionateSelector(ABCParentSelector):
     """A class for performing proportionate parent selection."""
 
-    def select(self, population: Union[list, ndarray], size=None, replace=True):
+    def select(self,
+               population: Union[list, ndarray],
+               size: int = None,
+               replace: bool = True):
         """
         Select a subset from the population.
 

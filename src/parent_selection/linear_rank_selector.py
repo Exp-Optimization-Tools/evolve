@@ -33,8 +33,8 @@ class LinearRankSelector(ABCParentSelector):
         # generate subjective fitness scores for each individual based on
         # their fitness and rank
         for rank, individual in enumerate(ranked):
-            subject_fitness = (P - rank) * dScore / (P - 1) + min_score
-            ranked_scores.append(subject_fitness)
+            subjective_fitness = (P - rank) * dScore / (P - 1) + min_score
+            ranked_scores.append(subjective_fitness)
         # if the sum is 0, the selection is random
         if sum(ranked_scores) == 0:
             return random.choice(population, size=size, replace=replace)

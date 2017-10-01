@@ -1,8 +1,8 @@
 """This module tests the proportionate_selector module."""
 import unittest
 from numpy import array, ndarray
-from ..proportionate_selector import *
 from population import BinaryChromosome, ChromosomeFactory
+from ..proportionate_selector import *
 
 
 def evaluate(genes: ndarray):

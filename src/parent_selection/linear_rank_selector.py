@@ -12,6 +12,16 @@ from .parent_selector import ABCParentSelector
 class LinearRankSelector(ABCParentSelector):
     """A class for performing linear rank parent selection."""
 
+    def __init__(self, size: int = None, replace: bool = True):
+        """
+        Initialize a new linear ranke parent selector.
+
+        Args:
+            size: the size of the sub population to select
+            replace: whether to allow replacement when selecting
+        """
+        super(LinearRankSelector, self).__init__(size, replace)
+
     def select(self,
                population: Union[list, ndarray],
                size: int = None,

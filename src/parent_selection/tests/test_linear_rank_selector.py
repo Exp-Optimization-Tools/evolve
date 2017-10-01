@@ -2,6 +2,7 @@
 import unittest
 from numpy import array, ndarray
 from population import BinaryChromosome, ChromosomeFactory
+from ..parent_selector import ABCParentSelector
 from ..linear_rank_selector import *
 
 
@@ -30,13 +31,17 @@ class LinearRankSelectorTestCase(unittest.TestCase):
         self.randpopulation = self.randfactory.population(10)
         self.one_and_zero = [self.zeropopulation[0], self.onespopulation[1]]
 
+
 #
 # MARK: __init__()
 #
 
-class ShouldInstantiateABCParentSelector(LinearRankSelectorTestCase):
+
+class ShouldInstantiateLinearRankSelelctor(LinearRankSelectorTestCase):
     def runTest(self):
+        self.assertTrue(isinstance(LinearRankSelector(), ABCParentSelector))
         self.assertTrue(isinstance(LinearRankSelector(), LinearRankSelector))
+
 
 #
 # MARK: select(population)

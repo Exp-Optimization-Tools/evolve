@@ -2,6 +2,7 @@
 import unittest
 from numpy import array, ndarray
 from population import BinaryChromosome, ChromosomeFactory
+from ..parent_selector import ABCParentSelector
 from ..proportionate_selector import *
 
 
@@ -21,23 +22,29 @@ class ProportionateSelectorTestCase(unittest.TestCase):
                                         initial_state='zeros')
         self.population = self.factory.population(10)
 
+
 #
 # MARK: __init__()
 #
 
-class ShouldInstantiateABCParentSelector(ProportionateSelectorTestCase):
+
+class ShouldInstantiateProportionateSelector(ProportionateSelectorTestCase):
     def runTest(self):
+        self.assertTrue(isinstance(ProportionateSelector(), ABCParentSelector))
         self.assertTrue(isinstance(ProportionateSelector(), ProportionateSelector))
+
 
 #
 # MARK: select(population)
 #
+
 
 class ShouldRaiseErrorOnInvalidPopulationWrongType(ProportionateSelectorTestCase):
     def runTest(self):
         sel = ProportionateSelector()
         with self.assertRaises(TypeError):
             sel.select('asdfasdfasdf')
+
 
 class ShouldSelectProportionately(ProportionateSelectorTestCase):
     def runTest(self):

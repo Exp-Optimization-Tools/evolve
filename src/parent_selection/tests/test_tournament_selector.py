@@ -2,6 +2,7 @@
 import unittest
 from numpy import array, ndarray
 from population import BinaryChromosome, ChromosomeFactory
+from ..parent_selector import ABCParentSelector
 from ..tournament_selector import *
 
 
@@ -38,6 +39,7 @@ class TournamentSelectorTestCase(unittest.TestCase):
 
 class ShouldInstantiateABCParentSelector(TournamentSelectorTestCase):
     def runTest(self):
+        self.assertTrue(isinstance(TournamentSelector(), ABCParentSelector))
         self.assertTrue(isinstance(TournamentSelector(), TournamentSelector))
 
 

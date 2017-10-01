@@ -11,21 +11,26 @@ from .parent_selector import ABCParentSelector
 class TournamentSelector(ABCParentSelector):
     """A class for performing tournament parent selection."""
 
-    def __init__(self, individuals_per_tournament: int = None):
+    def __init__(self, size: int = None, replace: bool = True, individuals_per_tournament: int = None):
         """
         Initialize a new tournament selector.
 
         Args:
+            size: the size of the sub population to select
+            replace: whether to allow replacement when selecting
             individuals_per_tournament: the number of individuals to select
                                         from for each tournment (default None)
         """
-        super(TournamentSelector, self).__init__()
+        # call super to verify and asssign super parameters
+        super(TournamentSelector, self).__init__(size, replace)
+        # verify the individuals_per_tournament parameter
         if individuals_per_tournament is None:
             pass
         elif not isinstance(individuals_per_tournament, int):
             raise TypeError('individuals_per_tournament must be of type: None, int')
         elif individuals_per_tournament < 0:
             raise ValueError('individuals_per_tournament must be >= 0')
+        # set the individuals_per_tournament to self
         self.individuals_per_tournament = individuals_per_tournament
 
     def select(self,

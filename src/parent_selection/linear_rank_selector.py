@@ -1,4 +1,9 @@
-"""This module contains a class for linear rank parent selection."""
+"""
+This module contains a class for linear rank parent selection.
+
+The proportionate selector is susceptible to:
+*   sorting on each call to select
+"""
 from typing import Union
 from numpy import ndarray, sum, random
 from .parent_selector import ABCParentSelector

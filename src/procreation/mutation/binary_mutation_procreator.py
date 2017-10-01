@@ -1,7 +1,7 @@
 """This module contains the binary mutation procreator class."""
 from numpy.random import random_sample
 from .mutation_procreator import MutationProcreatorABC
-from src.population import Chromosome
+
 
 class BinaryMutationProcreator(MutationProcreatorABC):
     """This class performs binary mutation on parents."""

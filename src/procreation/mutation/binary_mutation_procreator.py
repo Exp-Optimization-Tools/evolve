@@ -1,4 +1,5 @@
 """This module contains the binary mutation procreator class."""
+from numpy.random import random_sample
 from .mutation_procreator import MutationProcreatorABC
 
 
@@ -14,9 +15,13 @@ class BinaryMutationProcreator(MutationProcreatorABC):
         """
         super(BinaryMutationProcreator, self).__init__(mutation_rate)
 
-    def mutate(self, individual):
+    def mutate(self, individual, inplace=True):
         """Return a mutated copy of the individual."""
-        return super(BinaryMutationProcreator, self).mutate(individual)
+        flip = [random_sample() < self.mutation_rate for i in range(individual.size)]
+        if not inplace:
+            individual = individual.copy()
+        individual.genes[flip] = 1 - individual.genes[flip]
+        return individual
 
 
 # explicitly specify exports

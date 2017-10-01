@@ -14,6 +14,7 @@ class MutationProcreatorABC:
         """
         if not isinstance(mutation_rate, (float, int)):
             raise TypeError('mutation_rate should be of type: float, int')
+        self.mutation_rate = mutation_rate
 
     @abstractmethod
     def mutate(self, individual):

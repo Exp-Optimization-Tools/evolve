@@ -1,7 +1,7 @@
 """This module contains the mutation procreator abstract base class."""
 from typing import Union, List
-from src.population import Chromosome
 from abc import abstractmethod
+from src.population import Chromosome
 
 
 class MutationProcreatorABC:

@@ -40,6 +40,11 @@ class ProportionateSelector(ABCParentSelector):
             return random.choice(population, size=self.size, replace=self.replace)
         # generate probabilities as the proportion of score to total score
         probablities = scores / sum(scores)
+        # if the probabilities have converged such that there is a 1, numpy will
+        # raise an error. instead use random choice, TODO: assess the proper
+        # move here. error? return?
+        if 1 in probablities:
+            return random.choice(population, size=self.size, replace=self.replace)
         # return the results from the numpy choice function
         return random.choice(population, size=self.size, replace=self.replace, p=probablities)
 

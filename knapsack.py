@@ -73,9 +73,12 @@ for individual in population:
 
 def evolutionary_algorithm(population: np.ndarray,
                            parent_selector: ABCParentSelector,
-                           iterations: int=4000):
+                           parents_per_iteration: int = 2,
+                           iterations: int = 4000):
+    """A generalized form of the evolutionary algorithm."""
+    # iterate from the size of the population up to the number of iterations
     for iteration in range(len(population), iterations):
-        parents = parent_selector.select(population)
-        pass
+        # randomly select 2 parents using the parent_selector provided
+        parents = parent_selector.select(population, size=parents_per_iteration)
 
 evolutionary_algorithm(population, TournamentSelector(3))

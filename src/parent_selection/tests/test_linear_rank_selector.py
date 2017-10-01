@@ -53,8 +53,10 @@ class ShouldSelectProportionately(LinearRankSelectorTestCase):
         sel = LinearRankSelector()
         self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation).genes))
         self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation, size=2)[0].genes))
+        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation).genes))
+        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation, size=2)[0].genes))
 
-# class ShouldSelectProportionately(LinearRankSelectorTestCase):
+# class ShouldSelectProportionatelyOneAndZero(LinearRankSelectorTestCase):
 #     def runTest(self):
 #         sel = LinearRankSelector()
-#         # print(sel.select(self.one_and_zero))
+#         print(sel.select(self.one_and_zero))

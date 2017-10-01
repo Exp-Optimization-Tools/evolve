@@ -1,7 +1,12 @@
 """This module tests the linear_rank_selector module."""
 import unittest
-from numpy import array
+from numpy import array, ndarray
+from population import BinaryChromosome, ChromosomeFactory
 from ..linear_rank_selector import *
+
+
+def evaluate(genes: ndarray):
+    return genes.sum()
 
 
 #
@@ -10,7 +15,20 @@ from ..linear_rank_selector import *
 
 
 class LinearRankSelectorTestCase(unittest.TestCase):
-    pass
+    def setUp(self):
+        self.zerofactory = ChromosomeFactory(BinaryChromosome, 5,
+                                             evaluate=evaluate,
+                                             initial_state='zeros')
+        self.onesfactory = ChromosomeFactory(BinaryChromosome, 5,
+                                             evaluate=evaluate,
+                                             initial_state='ones')
+        self.randfactory = ChromosomeFactory(BinaryChromosome, 5,
+                                             evaluate=evaluate,
+                                             initial_state='random')
+        self.zeropopulation = self.zerofactory.population(10)
+        self.onespopulation = self.onesfactory.population(10)
+        self.randpopulation = self.randfactory.population(10)
+        self.one_and_zero = [self.zeropopulation[0], self.onespopulation[1]]
 
 #
 # MARK: __init__()
@@ -29,3 +47,14 @@ class ShouldRaiseErrorOnInvalidPopulationWrongType(LinearRankSelectorTestCase):
         sel = LinearRankSelector()
         with self.assertRaises(TypeError):
             sel.select('asdfasdfasdf')
+
+class ShouldSelectProportionately(LinearRankSelectorTestCase):
+    def runTest(self):
+        sel = LinearRankSelector()
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation).genes))
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation, size=2)[0].genes))
+
+# class ShouldSelectProportionately(LinearRankSelectorTestCase):
+#     def runTest(self):
+#         sel = LinearRankSelector()
+#         # print(sel.select(self.one_and_zero))

@@ -11,7 +11,7 @@ class BinaryChromosome(Chromosome):
     # the valid initial state options for how to initialize the chromosome
     INITIAL_STATES = ['zeros', 'ones', 'random']
 
-    def __init__(self, size: int, evaluate: Callable, initial_state='random'):
+    def __init__(self, size: int, evaluate: Callable, initial_state = 'random'):
         """Initialize a new chromosome of a given size.
 
         Args:
@@ -37,6 +37,14 @@ class BinaryChromosome(Chromosome):
     def __repr__(self) -> str:
         """Return a string represtation of this object"""
         return str(self.genes)
+
+    def copy(self):
+        """Return a copy of this chromosome."""
+        _copy = BinaryChromosome(size=self.size,
+                                 evaluate=self.evaluate,
+                                 initial_state='zeros')
+        _copy.genes = self.genes
+        return _copy
 
 
 # explicitly export the classes

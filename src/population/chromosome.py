@@ -50,6 +50,10 @@ class Chromosome:
         """Return the fitness of the gene from the evaluation function."""
         return self._evaluate(self.genes)
 
+    def copy(self):
+        """Return a copy of this chromosome."""
+        return Chromosome(size=self.size, evaluate=self.evaluate)
+
 
 # explicitly export the classes
 __all__ = [

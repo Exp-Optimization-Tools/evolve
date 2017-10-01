@@ -30,7 +30,7 @@ except:
 
 
 # the number of items in the bag (also the size of the binary chromosome)
-SIZE = 30
+SIZE = 1000
 # the base value for values of objects in the bag
 BASE_VALUE = 100
 # the value mapping for the objects
@@ -79,8 +79,8 @@ population = factory.population(20)
 
 print('initial population')
 print(max([ind.fitness for ind in population]))
-for individual in population:
-    print('{}: {}'.format(individual, individual.fitness))
+# for individual in population:
+#     print('{}: {}'.format(individual, individual.fitness))
 
 # # generational
 # def generational_algorithm(population: list,
@@ -123,7 +123,7 @@ def mu_mu_algorithm(population: list,
                     parent_selector: ABCParentSelector,
                     procreator: CrossoverProcreatorABC,
                     mutator: MutationProcreatorABC,
-                    iterations: int = 1000):
+                    iterations: int = 10000):
     """A generalized form of the evolutionary algorithm."""
     # iterate from the size of the population up to the number of iterations
     for iteration in range(len(population), iterations):
@@ -145,5 +145,5 @@ mu_mu_algorithm(population, parent_selector, procreator, mutator)
 
 print('final population')
 print(max([ind.fitness for ind in population]))
-for individual in population:
-    print('{}: {}'.format(individual, individual.fitness))
+# for individual in population:
+#     print('{}: {}'.format(individual, individual.fitness))

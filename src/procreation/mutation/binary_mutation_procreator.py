@@ -17,12 +17,11 @@ class BinaryMutationProcreator(MutationProcreatorABC):
 
     def mutate(self, individual, inplace=False):
         """Return a mutated copy of the individual."""
+        # super type checks individual and inplace
+        super(BinaryMutationProcreator, self).mutate(individual, inplace)
         # if it's a list or array, iterate over all the items
         if isinstance(individual, list):
             return [self.mutate(_ind, inplace=inplace) for _ind in individual]
-        # make sure it's a subclass of chromosome
-        elif not isinstance(individual, Chromosome):
-            raise ValueError('can only mutate subclasses of Chromosome')
         # get the indexes of bits to flip
         flip = [random_sample() < self.mutation_rate for _ in range(individual.size)]
         # create a copy if not in place

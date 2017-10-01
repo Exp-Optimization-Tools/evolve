@@ -39,7 +39,7 @@ class ShouldCreateMutationProcreator(BinaryMutationProcreatorTestCase):
 class ShouldRaiseErrorOnInvalidMutateParameters(BinaryMutationProcreatorTestCase):
     def runTest(self):
         mutator = BinaryMutationProcreator(mutation_rate=0)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             mutator.mutate('asdf')
 
 

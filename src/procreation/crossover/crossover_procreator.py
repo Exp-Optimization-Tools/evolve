@@ -18,6 +18,7 @@ class CrossoverProcreatorABC:
         # verify that there are at least 2 parents
         if len(parents) < 2:
             raise ValueError('crossovers must have at least 2 parents')
+        return parents
 
 
 # explicitly specify exports

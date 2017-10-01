@@ -32,6 +32,7 @@ SIZE = 10
 VALUES = np.random.randint(low=1, high=100, size=SIZE)
 # this is the list of weights W for items in the bag
 WEIGHTS = np.random.randint(low=50, high=100, size=SIZE)
+WEIGHTS_SUM = np.sum(WEIGHTS)
 # this is the size of the bag (the maximum cumulative weight it can hold)
 BAG_SIZE = np.random.randint(low=200, high=500, size=1)[0]
 
@@ -43,7 +44,7 @@ print('(bag size) c = {}'.format(BAG_SIZE))
 
 def evaluate(genes: np.array) -> float:
     """
-    Evaluate the genes in a chromosome.
+    Evaluate the genes in a chromosome normalize about bagsize.
 
     Args:
         genes: the genes to decode and evauate
@@ -53,21 +54,28 @@ def evaluate(genes: np.array) -> float:
     # make sure the chromosome holds the contraint that the total weight is
     # less than the maximum weight
     if np.sum(genes * WEIGHTS) > BAG_SIZE:
-        # return the negative distance between the current weight and max, this
-        # is likely better than a static return of -1 because it gives states
-        # with a closer weight to the limit higher fitness (albeit a negative
-        # one). this value is always negative
-        return BAG_SIZE - np.sum(genes * WEIGHTS)
+        # use the weight normalized about 1 to weight the bagsize
+        return BAG_SIZE * (1 - np.sum(genes * WEIGHTS) / WEIGHTS_SUM)
     # conditions have passed so we can score the items based on their values
-    return np.sum(genes * VALUES)
+    return np.sum(genes * VALUES) + BAG_SIZE
 
 
 # MARK: Initial Population
 factory = ChromosomeFactory(BinaryChromosome, SIZE,
                             evaluate=evaluate,
                             initial_state='random')
-population = Population(20, factory)
+population = factory.population(20)
 
 print('initial population')
-for individual in population.individuals:
+for individual in population:
     print('{}: {}'.format(individual, individual.fitness))
+
+
+def evolutionary_algorithm(population: np.ndarray,
+                           parent_selector: ABCParentSelector,
+                           iterations: int=4000):
+    for iteration in range(len(population), iterations):
+        parents = parent_selector.select(population)
+        pass
+
+evolutionary_algorithm(population, TournamentSelector(3))

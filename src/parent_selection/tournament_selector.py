@@ -11,7 +11,10 @@ from .parent_selector import ABCParentSelector
 class TournamentSelector(ABCParentSelector):
     """A class for performing tournament parent selection."""
 
-    def __init__(self, size: int = None, replace: bool = True, individuals_per_tournament: int = None):
+    def __init__(self,
+                 size: int = None,
+                 replace: bool = True,
+                 individuals_per_tournament: int = None):
         """
         Initialize a new tournament selector.
 
@@ -33,20 +36,12 @@ class TournamentSelector(ABCParentSelector):
         # set the individuals_per_tournament to self
         self.individuals_per_tournament = individuals_per_tournament
 
-    def select(self,
-               population: Union[list, ndarray],
-               size: int = None,
-               replace: bool = True):
+    def select(self, population: Union[list, ndarray]):
         """
         Select a subset from the population.
 
         Args:
             population: the list of Chromosomes to select from
-            k: the size of the random subset to select the best individuals
-               from (default 1)
-            size: the size of the array to return if any (default None)
-            replace: whether replacement is allowed in the selection
-                     (default True)
         """
         # call super to check the super parameters
         super(TournamentSelector, self).select(population)
@@ -56,15 +51,15 @@ class TournamentSelector(ABCParentSelector):
         else:
             participants = random.choice(population,
                                          size=self.individuals_per_tournament,
-                                         replace=replace)
+                                         replace=self.replace)
         individuals = sorted(participants,
                              key=lambda ind: ind.fitness,
                              reverse=True)
         # if there is no size, return the first (highest)
-        if size is None:
+        if self.size is None:
             return individuals[0]
         # return up to size individuals
-        return individuals[:size]
+        return individuals[:self.size]
 
 
 # explicitly export classes

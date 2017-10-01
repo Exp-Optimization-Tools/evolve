@@ -47,21 +47,23 @@ class ShouldInstantiateLinearRankSelelctor(LinearRankSelectorTestCase):
 # MARK: select(population)
 #
 
+
 class ShouldRaiseErrorOnInvalidPopulationWrongType(LinearRankSelectorTestCase):
     def runTest(self):
         sel = LinearRankSelector()
         with self.assertRaises(TypeError):
             sel.select('asdfasdfasdf')
 
+
 class ShouldSelectProportionately(LinearRankSelectorTestCase):
     def runTest(self):
         sel = LinearRankSelector()
         self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation).genes))
-        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation, size=2)[0].genes))
         self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation).genes))
-        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation, size=2)[0].genes))
 
-# class ShouldSelectProportionatelyOneAndZero(LinearRankSelectorTestCase):
-#     def runTest(self):
-#         sel = LinearRankSelector()
-#         print(sel.select(self.one_and_zero))
+
+class ShouldSelectProportionatelySize2(LinearRankSelectorTestCase):
+    def runTest(self):
+        sel = LinearRankSelector(size=2)
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation)[0].genes))
+        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation)[0].genes))

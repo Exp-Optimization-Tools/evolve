@@ -71,12 +71,11 @@ class ShouldSelectProportionately(TournamentSelectorTestCase):
     def runTest(self):
         sel = TournamentSelector(individuals_per_tournament=3)
         self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation).genes))
-        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation, size=2)[0].genes))
         self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation).genes))
-        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation, size=2)[0].genes))
 
 
-# class ShouldSelectProportionatelyOneAndZero(TournamentSelectorTestCase):
-#     def runTest(self):
-#         sel = TournamentSelector(individuals_per_tournament=3)
-#         print(sel.select(self.one_and_zero))
+class ShouldSelectProportionatelySize2(TournamentSelectorTestCase):
+    def runTest(self):
+        sel = TournamentSelector(individuals_per_tournament=3, size=2)
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation)[0].genes))
+        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation)[0].genes))

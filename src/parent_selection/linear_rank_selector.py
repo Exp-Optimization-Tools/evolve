@@ -22,10 +22,7 @@ class LinearRankSelector(ABCParentSelector):
         """
         super(LinearRankSelector, self).__init__(size, replace)
 
-    def select(self,
-               population: Union[list, ndarray],
-               size: int = None,
-               replace: bool = True):
+    def select(self, population: Union[list, ndarray]):
         """
         Select a subset from the population.
 
@@ -52,11 +49,11 @@ class LinearRankSelector(ABCParentSelector):
             ranked_scores.append(subjective_fitness)
         # if the sum is 0, the selection is random
         if sum(ranked_scores) == 0:
-            return random.choice(population, size=size, replace=replace)
+            return random.choice(population, size=self.size, replace=self.replace)
         # generate probablities from the subject ranks
         probablities = ranked_scores / sum(ranked_scores)
         # return the results from the numpy choice function
-        return random.choice(population, size=size, replace=replace, p=probablities)
+        return random.choice(population, size=self.size, replace=self.replace, p=probablities)
 
 
 # explicitly export classes

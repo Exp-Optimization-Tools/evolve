@@ -24,10 +24,7 @@ class ProportionateSelector(ABCParentSelector):
         """
         super(ProportionateSelector, self).__init__(size, replace)
 
-    def select(self,
-               population: Union[list, ndarray],
-               size: int = None,
-               replace: bool = True):
+    def select(self, population: Union[list, ndarray]):
         """
         Select a subset from the population.
 
@@ -40,11 +37,11 @@ class ProportionateSelector(ABCParentSelector):
         scores = [individual.fitness for individual in population]
         # if the score is 0, they have equal chances
         if sum(scores) == 0:
-            return random.choice(population, size=size, replace=replace)
+            return random.choice(population, size=self.size, replace=self.replace)
         # generate probabilities as the proportion of score to total score
         probablities = scores / sum(scores)
         # return the results from the numpy choice function
-        return random.choice(population, size=size, replace=replace, p=probablities)
+        return random.choice(population, size=self.size, replace=self.replace, p=probablities)
 
 
 # explicitly export classes

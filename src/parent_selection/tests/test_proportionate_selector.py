@@ -50,4 +50,10 @@ class ShouldSelectProportionately(ProportionateSelectorTestCase):
     def runTest(self):
         sel = ProportionateSelector()
         self.assertEqual([0,0,0,0,0], list(sel.select(self.population).genes))
-        self.assertEqual([0,0,0,0,0], list(sel.select(self.population, size=2)[0].genes))
+
+
+class ShouldSelectProportionatelySize2(ProportionateSelectorTestCase):
+    def runTest(self):
+        sel = ProportionateSelector(size=2)
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.population)[0].genes))
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.population)[1].genes))

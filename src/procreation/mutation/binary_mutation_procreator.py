@@ -17,6 +17,9 @@ class BinaryMutationProcreator(MutationProcreatorABC):
 
     def mutate(self, individual, inplace=True):
         """Return a mutated copy of the individual."""
+        # if it's a list or array, iterate over all the items
+        if isinstance(individual, list):
+            return [self.mutate(_ind, inplace=inplace) for _ind in individual]
         flip = [random_sample() < self.mutation_rate for i in range(individual.size)]
         if not inplace:
             individual = individual.copy()

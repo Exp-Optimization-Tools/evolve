@@ -70,8 +70,8 @@ print('initial population')
 for individual in population:
     print('{}: {}'.format(individual, individual.fitness))
 
-
-def evolutionary_algorithm(population: np.ndarray,
+# generational
+def evolutionary_algorithm(population: list,
                            parent_selector: ABCParentSelector,
                            procreator: CrossoverProcreatorABC,
                            mutator: MutationProcreatorABC,
@@ -81,20 +81,31 @@ def evolutionary_algorithm(population: np.ndarray,
     # iterate from the size of the population up to the number of iterations
     for iteration in range(len(population), iterations):
         # randomly select some parents using the parent_selector provided
-        parents = parent_selector.select(population, size=parents_per_iteration)
+        parents = parent_selector.select(population, size=parents_per_iteration, replace=False)
+        # Generational algorithm, replace parents with children
+        for parent in parents:
+            # make sure the parent wasnt the result of replacement pull
+            if parent in population:
+                population.remove(parent)
         # randomly procreate using the procreator
         children = procreator.procreate(parents)
         # mutate the child using the mutator
         mutated_children = mutator.mutate(children)
+        # add the mutated children to the list
+        population += mutated_children
 
-        print(children)
-        print(mutated_children)
-        print()
-
-        
+        # print(children)
+        # print(mutated_children)
+        # print()
 
 
-parent_selector = TournamentSelector(3)
+
+
+parent_selector = LinearRankSelector()
 procreator = NPointCrossoverProcreator(crossovers=2)
 mutator = BinaryMutationProcreator(mutation_rate=0.01)
 evolutionary_algorithm(population, parent_selector, procreator, mutator)
+
+print('final population')
+for individual in population:
+    print('{}: {}'.format(individual, individual.fitness))

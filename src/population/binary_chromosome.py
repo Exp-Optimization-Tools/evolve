@@ -1,6 +1,6 @@
 """This module contains a class representing a binary chromosome."""
 from typing import Callable
-from numpy import ones, zeros
+from numpy import ones, zeros, array
 from numpy.random import randint
 from .chromosome import Chromosome
 
@@ -62,7 +62,7 @@ class BinaryChromosome(Chromosome):
             raise ValueError('passed genes of incorrect size')
         # otherwise copy the genes
         else:
-            _copy.genes = genes
+            _copy.genes = array(genes)
         return _copy
 
 

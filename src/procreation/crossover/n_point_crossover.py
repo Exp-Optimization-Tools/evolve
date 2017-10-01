@@ -49,18 +49,24 @@ class NPointCrossoverProcreator(CrossoverProcreatorABC):
                                           replace=False)) + [parents[0].size]
         # zip the indecies into ranges for indexing from parents
         cut_pairs = [(cuts[i], cuts[i + 1]) for i in range(0, len(cuts) - 1)]
-        # TODO: option to select from one or the other (or others) randomly
-        # instead of lock step
-        # print(cut_pairs)
-        # parents = random.choice(arange(0, len(parents)),
-        #                         size=len(cut_pairs),
-        #                         replace=True)
-        # print(parents)
-        # print()
-        pieces = [parents[index % len(parents)].genes[cut[0]:cut[1]] for index, cut in enumerate(cut_pairs)]
-        child = parents[0].copy()
-        child.genes = array(flattened(pieces))
-        return child
+        # the list of lists that need crushed into a single list
+        child_pieces = [[] for _ in range(len(parents))]
+        # loop over the indexes and cuts in the cut pairs
+        for index, cut in enumerate(cut_pairs):
+            # loop over each parent to get the same number of children as
+            # parents
+            for parent_index in range(len(parents)):
+                # make a child piece by cutting the parent along the cut
+                child_piece = parents[parent_index].genes[cut[0]:cut[1]]
+                # append to the appropriate child piece list in a cyclical
+                # fashion using the index, parent index, and modulo of parent
+                # length
+                child_pieces[(parent_index + index) % len(parents)].append(child_piece)
+        # flatten the lists of pieces into single lists of bits
+        child_genes = [flattened(child_piece) for child_piece in child_pieces]
+        # create new genes by copying parents and replacing their genes, one
+        # could just use the parent at index 0, but this form is more general
+        return [parents[index].copy(genes=genes) for index, genes in enumerate(child_genes)]
 
 
 # explicitly specify exports

@@ -1,5 +1,8 @@
 """This module contains test code for the n_point_crossover module."""
 import unittest
+# setup randomness for testing random moving parts (not very TDD, but le fek it)
+from numpy.random import seed
+seed(10)
 from population import BinaryChromosome
 from ..n_point_crossover import *
 
@@ -77,42 +80,41 @@ class ShouldRaiseErrorOnTooFewParents(NPointCrossoverProcreatorTestCase):
 class ShouldPerform0PointCrossover(NPointCrossoverProcreatorTestCase):
     def runTest(self):
         crossover = NPointCrossoverProcreator(crossovers=0)
-        child = crossover.procreate([ones, zeros])
-        self.assertEqual([1,1,1,1,1], list(child.genes))
+        children = crossover.procreate([ones, zeros])
+        self.assertEqual([1,1,1,1,1], list(children[0].genes))
+        self.assertEqual([0,0,0,0,0], list(children[1].genes))
 
 
 class ShouldPerform1PointCrossover(NPointCrossoverProcreatorTestCase):
     def runTest(self):
         crossover = NPointCrossoverProcreator(crossovers=1)
-        for i in range(0, 10):
-            child = crossover.procreate([ones, zeros])
-            self.assertTrue(child.genes.sum() >= 1)
-            self.assertTrue(child.genes.sum() <= 4)
+        children = crossover.procreate([ones, zeros])
+        self.assertEqual([1,0,0,0,0], list(children[0].genes))
+        self.assertEqual([0,1,1,1,1], list(children[1].genes))
 
 
 class ShouldPerform2PointCrossover(NPointCrossoverProcreatorTestCase):
     def runTest(self):
         crossover = NPointCrossoverProcreator(crossovers=2)
-        for i in range(0, 10):
-            child = crossover.procreate([ones, zeros])
-            self.assertTrue(child.genes.sum() >= 2)
-            self.assertTrue(child.genes.sum() <= 4)
+        children = crossover.procreate([ones, zeros])
+        self.assertEqual([1,1,0,1,1], list(children[0].genes))
+        self.assertEqual([0,0,1,0,0], list(children[1].genes))
 
 
 class ShouldPerform3PointCrossover(NPointCrossoverProcreatorTestCase):
     def runTest(self):
         crossover = NPointCrossoverProcreator(crossovers=3)
-        for i in range(0, 10):
-            child = crossover.procreate([ones, zeros])
-            self.assertTrue(child.genes.sum() >= 2)
-            self.assertTrue(child.genes.sum() <= 3)
+        children = crossover.procreate([ones, zeros])
+        self.assertEqual([1,0,1,1,0], list(children[0].genes))
+        self.assertEqual([0,1,0,0,1], list(children[1].genes))
 
 
 class ShouldPerform4PointCrossover(NPointCrossoverProcreatorTestCase):
     def runTest(self):
         crossover = NPointCrossoverProcreator(crossovers=4)
-        child = crossover.procreate([ones, zeros])
-        self.assertEqual([1,0,1,0,1], list(child.genes))
+        children = crossover.procreate([ones, zeros])
+        self.assertEqual([1,0,1,0,1], list(children[0].genes))
+        self.assertEqual([0,1,0,1,0], list(children[1].genes))
 
 
 class ShouldRaiseErrorOn5PointCrossover(NPointCrossoverProcreatorTestCase):

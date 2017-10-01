@@ -38,12 +38,31 @@ class BinaryChromosome(Chromosome):
         """Return a string represtation of this object"""
         return str(self.genes)
 
-    def copy(self):
-        """Return a copy of this chromosome."""
+    def copy(self, genes='self'):
+        """
+        Return a copy of this chromosome.
+
+        Args:
+            genes: the new genes for the copy if any. (default 'self') i.e.
+                   this chromosomes current genes
+
+        Returns: a copy of this chromosome with possibly new genes (child)
+        """
         _copy = BinaryChromosome(size=self.size,
                                  evaluate=self.evaluate,
                                  initial_state='zeros')
-        _copy.genes = self.genes
+        # if it's self, us this chromosomes genes (default)
+        if genes == 'self':
+            _copy.genes = self.genes
+        # if none, do nothing (i.e. use zeros)
+        elif genes is None:
+            pass
+        # make sure the genes are good to use
+        elif len(genes) != _copy.size:
+            raise ValueError('passed genes of incorrect size')
+        # otherwise copy the genes
+        else:
+            _copy.genes = genes
         return _copy
 
 

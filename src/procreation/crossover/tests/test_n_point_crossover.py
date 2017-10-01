@@ -87,26 +87,29 @@ class ShouldPerform0PointCrossover(NPointCrossoverProcreatorTestCase):
 
 class ShouldPerform1PointCrossover(NPointCrossoverProcreatorTestCase):
     def runTest(self):
+        seed(1000)
         crossover = NPointCrossoverProcreator(crossovers=1)
         children = crossover.procreate([ones, zeros])
-        self.assertEqual([1,0,0,0,0], list(children[0].genes))
-        self.assertEqual([0,1,1,1,1], list(children[1].genes))
+        self.assertEqual([1,1,1,0,0], list(children[0].genes))
+        self.assertEqual([0,0,0,1,1], list(children[1].genes))
 
 
 class ShouldPerform2PointCrossover(NPointCrossoverProcreatorTestCase):
     def runTest(self):
+        seed(1001)
         crossover = NPointCrossoverProcreator(crossovers=2)
         children = crossover.procreate([ones, zeros])
-        self.assertEqual([1,1,0,1,1], list(children[0].genes))
-        self.assertEqual([0,0,1,0,0], list(children[1].genes))
+        self.assertEqual([1,0,0,1,1], list(children[0].genes))
+        self.assertEqual([0,1,1,0,0], list(children[1].genes))
 
 
 class ShouldPerform3PointCrossover(NPointCrossoverProcreatorTestCase):
     def runTest(self):
+        seed(1002)
         crossover = NPointCrossoverProcreator(crossovers=3)
         children = crossover.procreate([ones, zeros])
-        self.assertEqual([1,0,1,1,0], list(children[0].genes))
-        self.assertEqual([0,1,0,0,1], list(children[1].genes))
+        self.assertEqual([1,0,1,0,0], list(children[0].genes))
+        self.assertEqual([0,1,0,1,1], list(children[1].genes))
 
 
 class ShouldPerform4PointCrossover(NPointCrossoverProcreatorTestCase):

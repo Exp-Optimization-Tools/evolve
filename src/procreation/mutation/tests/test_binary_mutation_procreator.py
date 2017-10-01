@@ -92,6 +92,7 @@ class ShouldMutateAllList(BinaryMutationProcreatorTestCase):
 
 class ShouldMutateHalf(BinaryMutationProcreatorTestCase):
     def runTest(self):
+        seed(2222)
         mutator = BinaryMutationProcreator(mutation_rate=0.5)
         chroms = [
             BinaryChromosome(size=5, evaluate=arb_eval, initial_state='zeros'),
@@ -99,6 +100,6 @@ class ShouldMutateHalf(BinaryMutationProcreatorTestCase):
             BinaryChromosome(size=5, evaluate=arb_eval, initial_state='random')
         ]
         mutated = mutator.mutate(chroms)
-        self.assertEqual([1,0,1,0,1], list(mutated[0].genes))
-        self.assertEqual([0,1,0,0,0], list(mutated[1].genes))
-        self.assertEqual([0,0,1,1,1], list(mutated[2].genes))
+        self.assertEqual([0,0,0,0,1], list(mutated[0].genes))
+        self.assertEqual([1,1,0,0,0], list(mutated[1].genes))
+        self.assertEqual([0,1,1,0,1], list(mutated[2].genes))

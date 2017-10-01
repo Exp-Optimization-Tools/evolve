@@ -8,11 +8,12 @@ class CrossoverProcreatorABC:
     @abstractmethod
     def procreate(self, parents: list) -> list:
         """
-        Create a child from a collection of parents.
-        
+        Create children from a collection of parents.
+
         Args:
             parents: the list of parents to select from
-            crossovers: the number of crossovers to perform
+
+        Returns: a list of children from the parents (1 child for each parent)
         """
         # verify that there are at least 2 parents
         if len(parents) < 2:

@@ -2,7 +2,9 @@
 import unittest
 from population import BinaryChromosome
 from ..crossover_procreator import *
-
+# random seed
+from numpy.random import seed
+seed(10)
 
 #
 # MARK: Abstract Base Class
@@ -31,14 +33,40 @@ def arb_eval(genes):
     return 0
 
 
-class ShouldRaiseErrorOnNoParents(CrossoverProcreatorTestCase):
+class procreate_ShouldRaiseErrorOnMissingParams(CrossoverProcreatorTestCase):
+    def runTest(self):
+        crossover = CrossoverProcreatorABC()
+        with self.assertRaises(TypeError):
+            crossover.procreate()
+
+
+class procreate_ShouldRaiseErrorOnInvalidParamType(CrossoverProcreatorTestCase):
+    def runTest(self):
+        crossover = CrossoverProcreatorABC()
+        with self.assertRaises(TypeError):
+            crossover.procreate('asdfasdf')
+
+
+class procreate_ShouldRaiseErrorOnNoParents(CrossoverProcreatorTestCase):
     def runTest(self):
         crossover = CrossoverProcreatorABC()
         with self.assertRaises(ValueError):
             crossover.procreate([])
 
-class ShouldRaiseErrorOnTooFewParents(CrossoverProcreatorTestCase):
+
+class procreate_ShouldRaiseErrorOnTooFewParents(CrossoverProcreatorTestCase):
     def runTest(self):
         crossover = CrossoverProcreatorABC()
         with self.assertRaises(ValueError):
             crossover.procreate([BinaryChromosome(size=5, evaluate=arb_eval)])
+
+
+class procreate_ShouldReturnParents(CrossoverProcreatorTestCase):
+    def runTest(self):
+        crossover = CrossoverProcreatorABC()
+        parents = [
+            BinaryChromosome(size=5, evaluate=arb_eval, initial_state='zeros'),
+            BinaryChromosome(size=5, evaluate=arb_eval, initial_state='zeros')
+        ]
+        children = crossover.procreate(parents)
+        self.assertEqual(parents, children)

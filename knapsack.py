@@ -83,9 +83,15 @@ def evolutionary_algorithm(population: np.ndarray,
         # randomly select some parents using the parent_selector provided
         parents = parent_selector.select(population, size=parents_per_iteration)
         # randomly procreate using the procreator
-        child = procreator.procreate(parents)
+        children = procreator.procreate(parents)
         # mutate the child using the mutator
-        mutated_child = mutator.mutate(child)
+        mutated_children = mutator.mutate(children)
+
+        print(children)
+        print(mutated_children)
+        print()
+
+        
 
 
 parent_selector = TournamentSelector(3)

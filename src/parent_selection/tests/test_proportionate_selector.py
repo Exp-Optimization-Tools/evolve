@@ -6,7 +6,7 @@ from ..proportionate_selector import *
 
 
 def evaluate(genes: ndarray):
-    return 1
+    return genes.sum()
 
 
 #

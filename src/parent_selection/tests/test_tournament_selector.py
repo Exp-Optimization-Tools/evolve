@@ -30,17 +30,33 @@ class TournamentSelectorTestCase(unittest.TestCase):
         self.randpopulation = self.randfactory.population(10)
         self.one_and_zero = [self.zeropopulation[0], self.onespopulation[1]]
 
+
 #
 # MARK: __init__()
 #
+
 
 class ShouldInstantiateABCParentSelector(TournamentSelectorTestCase):
     def runTest(self):
         self.assertTrue(isinstance(TournamentSelector(), TournamentSelector))
 
+
+class ShouldRaiseErrorOnInvalidIndividualsPerTournyType(TournamentSelectorTestCase):
+    def runTest(self):
+        with self.assertRaises(TypeError):
+            TournamentSelector(individuals_per_tournament='asdf')
+
+
+class ShouldRaiseErrorOnInvalidIndividualsPerTournyNegative(TournamentSelectorTestCase):
+    def runTest(self):
+        with self.assertRaises(ValueError):
+            TournamentSelector(individuals_per_tournament=-1)
+
+
 #
 # MARK: select(population)
 #
+
 
 class ShouldRaiseErrorOnInvalidPopulationWrongType(TournamentSelectorTestCase):
     def runTest(self):
@@ -48,15 +64,17 @@ class ShouldRaiseErrorOnInvalidPopulationWrongType(TournamentSelectorTestCase):
         with self.assertRaises(TypeError):
             sel.select('asdfasdfasdf')
 
+
 class ShouldSelectProportionately(TournamentSelectorTestCase):
     def runTest(self):
-        sel = TournamentSelector()
-        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation, k=3).genes))
-        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation, k=3, size=2)[0].genes))
-        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation, k=3).genes))
-        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation, k=3, size=2)[0].genes))
+        sel = TournamentSelector(individuals_per_tournament=3)
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation).genes))
+        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation, size=2)[0].genes))
+        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation).genes))
+        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation, size=2)[0].genes))
+
 
 # class ShouldSelectProportionatelyOneAndZero(TournamentSelectorTestCase):
 #     def runTest(self):
-#         sel = TournamentSelector()
-#         print(sel.select(self.one_and_zero, k=3))
+#         sel = TournamentSelector(individuals_per_tournament=3)
+#         print(sel.select(self.one_and_zero))

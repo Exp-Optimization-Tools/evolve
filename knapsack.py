@@ -19,6 +19,8 @@ from src import *
 import numpy as np
 from numpy.random import seed
 from random import shuffle
+
+
 # setup random seed from the command line
 try:
     from sys import argv
@@ -27,20 +29,23 @@ except:
     seed(10)
 
 
-# MARK: Evaluation Function
-# evaluation functions are specified by the developer to allow max
-# customization
-#
-
-# this is the size of the chromosome (number of items in the bag)
-SIZE = 10
-# this is the list of values V for items in the bag
-VALUES = np.random.randint(low=1, high=100, size=SIZE)
-# this is the list of weights W for items in the bag
-WEIGHTS = np.random.randint(low=50, high=100, size=SIZE)
+# the number of items in the bag (also the size of the binary chromosome)
+SIZE = 30
+# the base value for values of objects in the bag
+BASE_VALUE = 100
+# the value mapping for the objects
+VALUES = (np.random.random_sample(size=SIZE) * BASE_VALUE).astype(int)
+# the base weight for generating weights randomly
+BASE_WEIGHT = 1000
+# the weight mapping for the objects
+WEIGHTS = (np.random.random_sample(size=SIZE) * BASE_WEIGHT).astype(int)
+# the sum of all the weights (total weight of all objects)
 WEIGHTS_SUM = np.sum(WEIGHTS)
-# this is the size of the bag (the maximum cumulative weight it can hold)
-BAG_SIZE = np.random.randint(low=200, high=500, size=1)[0]
+# reduces the bag size to a proportion of the mean value for each object
+BAG_SIZE_FACTOR = 1 / 3
+# the size of the bag based on the mean weight, number of items to select from,
+# and the bag size factor
+BAG_SIZE = int(SIZE * WEIGHTS.mean() * BAG_SIZE_FACTOR)
 
 
 print('(scores)   V = {}'.format(VALUES))
@@ -112,12 +117,13 @@ for individual in population:
 #     print('{}: {}'.format(individual, individual.fitness))
 
 
+
 # \mu + \mu replacement
 def mu_mu_algorithm(population: list,
                     parent_selector: ABCParentSelector,
                     procreator: CrossoverProcreatorABC,
                     mutator: MutationProcreatorABC,
-                    iterations: int = 8000):
+                    iterations: int = 1000):
     """A generalized form of the evolutionary algorithm."""
     # iterate from the size of the population up to the number of iterations
     for iteration in range(len(population), iterations):
@@ -128,14 +134,9 @@ def mu_mu_algorithm(population: list,
         # mutate the child using the mutator
         mutated_children = mutator.mutate(children)
         # add the mutated children to the list and replace the worst individuals
-        population.sort(key=lambda ind: ind.fitness, reverse=False)
+        population.sort(key=lambda ind: ind.fitness, reverse=True)
         [population.pop() for _ in range(parent_selector.size)]
         population += mutated_children
-
-
-
-
-
 
 parent_selector = ProportionateSelector(size=2, replace=False)
 procreator = NPointCrossoverProcreator(crossovers=1)
@@ -143,5 +144,6 @@ mutator = BinaryMutationProcreator(mutation_rate=0.1)
 mu_mu_algorithm(population, parent_selector, procreator, mutator)
 
 print('final population')
+print(max([ind.fitness for ind in population]))
 for individual in population:
     print('{}: {}'.format(individual, individual.fitness))

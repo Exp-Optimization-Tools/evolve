@@ -7,6 +7,28 @@ from numpy import ndarray
 class ABCParentSelector:
     """An abstract base class outlining the API for parent selection"""
 
+    def __init__(self, size: int = None, replace: bool = True):
+        """
+        Initialize a new abstract base parent selector.
+
+        Args:
+            size: the size of the sub population to select
+            replace: whether to allow replacement when selecting
+        """
+        # check size. it can be: None, float, int
+        if size is None:
+            pass
+        elif not isinstance(size, (int, float)):
+            raise TypeError('size must be of type: int, float')
+        elif size < 0:
+            raise ValueError('size must be greater than 0')
+        # check replace. it can be only a bool
+        if not isinstance(replace, bool):
+            raise TypeError('replace must be of type boolean')
+        # assign instance variables
+        self.size = size
+        self.replace = replace
+
     @abc.abstractmethod
     def select(self, population: Union[list, ndarray]):
         """

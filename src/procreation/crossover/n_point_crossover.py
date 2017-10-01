@@ -1,6 +1,8 @@
 """This module contains the n-point crossover procreator class."""
-from numpy import arange, random, array
+from typing import List, Union
+from numpy import arange, random, array, ndarray
 from numpy.random import choice
+from src.population import Chromosome
 from .crossover_procreator import CrossoverProcreatorABC
 
 
@@ -33,7 +35,7 @@ class NPointCrossoverProcreator(CrossoverProcreatorABC):
             raise ValueError('crossovers must >= 0')
         self.crossovers = crossovers
 
-    def procreate(self, parents: list) -> list:
+    def procreate(self, parents: Union[List[Chromosome], ndarray]) -> List[Chromosome]:
         """
         Args:
             parents: the list of parents to select from
@@ -48,7 +50,7 @@ class NPointCrossoverProcreator(CrossoverProcreatorABC):
                                           size=self.crossovers,
                                           replace=False)) + [parents[0].size]
         # zip the indecies into ranges for indexing from parents
-        cut_pairs = [(cuts[i], cuts[i + 1]) for i in range(0, len(cuts) - 1)]
+        cut_pairs = [(cuts[i], cuts[i + 1]) for i in range(len(cuts) - 1)]
         # the list of lists that need crushed into a single list
         child_pieces = [[] for _ in range(len(parents))]
         # loop over the indexes and cuts in the cut pairs

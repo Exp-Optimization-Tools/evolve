@@ -73,6 +73,7 @@ for individual in population:
 
 def evolutionary_algorithm(population: np.ndarray,
                            parent_selector: ABCParentSelector,
+                           procreator: CrossoverProcreatorABC,
                            parents_per_iteration: int = 2,
                            iterations: int = 4000):
     """A generalized form of the evolutionary algorithm."""
@@ -80,5 +81,9 @@ def evolutionary_algorithm(population: np.ndarray,
     for iteration in range(len(population), iterations):
         # randomly select 2 parents using the parent_selector provided
         parents = parent_selector.select(population, size=parents_per_iteration)
+        child = procreator.procreate(parents)
 
-evolutionary_algorithm(population, TournamentSelector(3))
+
+parent_selector = TournamentSelector(3)
+procreator = NPointCrossoverProcreator(crossovers=2)
+evolutionary_algorithm(population, parent_selector, procreator)

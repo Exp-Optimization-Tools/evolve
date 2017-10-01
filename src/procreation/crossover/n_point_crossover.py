@@ -39,9 +39,7 @@ class NPointCrossoverProcreator(CrossoverProcreatorABC):
             parents: the list of parents to select from
             crossovers: the number of crossovers to perform
         """
-        # verify that there are at least 2 parents
-        if len(parents) < 2:
-            raise ValueError('crossovers must have at least 2 parents')
+        super(NPointCrossoverProcreator, self).procreate(parents)
         # verify that the size of the parents is more than the number of cuts
         if parents[0].size <= self.crossovers:
             raise ValueError('too many crossover points for chromosome size')

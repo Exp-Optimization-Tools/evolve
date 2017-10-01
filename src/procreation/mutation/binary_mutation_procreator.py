@@ -1,7 +1,7 @@
 """This module contains the binary mutation procreator class."""
 from numpy.random import random_sample
 from .mutation_procreator import MutationProcreatorABC
-
+from src.population import Chromosome
 
 class BinaryMutationProcreator(MutationProcreatorABC):
     """This class performs binary mutation on parents."""
@@ -15,14 +15,20 @@ class BinaryMutationProcreator(MutationProcreatorABC):
         """
         super(BinaryMutationProcreator, self).__init__(mutation_rate)
 
-    def mutate(self, individual, inplace=True):
+    def mutate(self, individual, inplace=False):
         """Return a mutated copy of the individual."""
         # if it's a list or array, iterate over all the items
         if isinstance(individual, list):
             return [self.mutate(_ind, inplace=inplace) for _ind in individual]
-        flip = [random_sample() < self.mutation_rate for i in range(individual.size)]
+        # make sure it's a subclass of chromosome
+        elif not isinstance(individual, Chromosome):
+            raise ValueError('can only mutate subclasses of Chromosome')
+        # get the indexes of bits to flip
+        flip = [random_sample() < self.mutation_rate for _ in range(individual.size)]
+        # create a copy if not in place
         if not inplace:
             individual = individual.copy()
+        # flip the genes accordingly
         individual.genes[flip] = 1 - individual.genes[flip]
         return individual
 

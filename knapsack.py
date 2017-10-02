@@ -82,39 +82,37 @@ print(max([ind.fitness for ind in population]))
 # for individual in population:
 #     print('{}: {}'.format(individual, individual.fitness))
 
-# # generational
-# def generational_algorithm(population: list,
-#                            parent_selector: ABCParentSelector,
-#                            procreator: CrossoverProcreatorABC,
-#                            mutator: MutationProcreatorABC,
-#                            iterations: int = 100):
-#     """A generalized form of the evolutionary algorithm."""
-#     # iterate from the size of the population up to the number of iterations
-#     for iteration in range(len(population), iterations):
-#         # randomly select some parents using the parent_selector provided
-#         parents = parent_selector.select(population)
-#         # Generational algorithm, replace parents with children
-#         [population.remove(parent) for parent in parents if parent in population]
-#         # randomly procreate using the procreator
-#         children = procreator.procreate(parents)
-#         # mutate the child using the mutator
-#         mutated_children = mutator.mutate(children)
-#         # add the mutated children to the list
-#         population += mutated_children
-#
-#         # print(children)
-#         # print(mutated_children)
-#         # print()
-#
-# parent_selector = LinearRankSelector(size=2, replace=False)
+
+
+
+
+# generational
+def generational_algorithm(population: list,
+                           parent_selector: ABCParentSelector,
+                           procreator: CrossoverProcreatorABC,
+                           mutator: MutationProcreatorABC,
+                           iterations: int = 2000):
+    """A generalized form of the evolutionary algorithm."""
+    # iterate from the size of the population up to the number of iterations
+    for iteration in range(len(population), iterations):
+        # randomly select some parents using the parent_selector provided
+        parents = parent_selector.select(population)
+        # randomly procreate using the procreator
+        children = procreator.procreate(parents)
+        # mutate the child using the mutator
+        mutated_children = mutator.mutate(children)
+        # Generational algorithm, replace parents with children
+        [population.remove(parent) for parent in parents if parent in population]
+        # add the mutated children to the list
+        population += mutated_children
+
+
+# parent_selector = TournamentSelector(size=2, replace=False, individuals_per_tournament=3)
 # procreator = NPointCrossoverProcreator(crossovers=1)
-# mutator = BinaryMutationProcreator(mutation_rate=0.01)
+# mutator = BinaryMutationProcreator(mutation_rate=0.005)
 # generational_algorithm(population, parent_selector, procreator, mutator)
-#
-# print('final population')
-# print(max([ind.fitness for ind in population]))
-# for individual in population:
-#     print('{}: {}'.format(individual, individual.fitness))
+
+
 
 
 
@@ -123,7 +121,7 @@ def mu_mu_algorithm(population: list,
                     parent_selector: ABCParentSelector,
                     procreator: CrossoverProcreatorABC,
                     mutator: MutationProcreatorABC,
-                    iterations: int = 10000):
+                    iterations: int = 2000):
     """A generalized form of the evolutionary algorithm."""
     # iterate from the size of the population up to the number of iterations
     for iteration in range(len(population), iterations):
@@ -138,10 +136,16 @@ def mu_mu_algorithm(population: list,
         [population.pop() for _ in range(parent_selector.size)]
         population += mutated_children
 
-parent_selector = ProportionateSelector(size=2, replace=False)
+
+parent_selector = TournamentSelector(size=2, replace=False, individuals_per_tournament=3)
 procreator = NPointCrossoverProcreator(crossovers=1)
-mutator = BinaryMutationProcreator(mutation_rate=0.1)
+mutator = BinaryMutationProcreator(mutation_rate=0.05)
 mu_mu_algorithm(population, parent_selector, procreator, mutator)
+
+
+
+
+
 
 print('final population')
 print(max([ind.fitness for ind in population]))

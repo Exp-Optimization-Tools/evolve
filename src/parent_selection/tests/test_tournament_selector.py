@@ -4,6 +4,7 @@ from numpy import array, ndarray
 from population import BinaryChromosome, ChromosomeFactory
 from ..parent_selector import ABCParentSelector
 from ..tournament_selector import *
+from numpy.random import seed
 
 
 def evaluate(genes: ndarray):
@@ -67,15 +68,28 @@ class ShouldRaiseErrorOnInvalidPopulationWrongType(TournamentSelectorTestCase):
             sel.select('asdfasdfasdf')
 
 
-class ShouldSelectProportionately(TournamentSelectorTestCase):
+class ShouldSelectProportionatelyNoneSize(TournamentSelectorTestCase):
     def runTest(self):
-        sel = TournamentSelector(individuals_per_tournament=3)
-        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation).genes))
-        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation).genes))
+        seed(3000)
+        selector = TournamentSelector(individuals_per_tournament=3)
+        selection0 = selector.select(self.zeropopulation)
+        selection1 = selector.select(self.onespopulation)
+        self.assertEqual([0, 0, 0, 0, 0], list(selection0[0].genes))
+        self.assertEqual([1, 1, 1, 1, 1], list(selection1[1].genes))
+
+
+class ShouldSelectProportionatelySize1(TournamentSelectorTestCase):
+    def runTest(self):
+        seed(3001)
+        selector = TournamentSelector(individuals_per_tournament=3, size=1)
+        selection = selector.select(self.onespopulation)
+        self.assertEqual([1, 1, 1, 1, 1], list(selection[0].genes))
 
 
 class ShouldSelectProportionatelySize2(TournamentSelectorTestCase):
     def runTest(self):
-        sel = TournamentSelector(individuals_per_tournament=3, size=2)
-        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation)[0].genes))
-        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation)[0].genes))
+        seed(3005)
+        selector = TournamentSelector(individuals_per_tournament=3, size=2)
+        selection = selector.select(self.randpopulation)
+        self.assertEqual([1, 1, 1, 1, 0], list(selection[0].genes))
+        self.assertEqual([0, 1, 1, 0, 0], list(selection[1].genes))

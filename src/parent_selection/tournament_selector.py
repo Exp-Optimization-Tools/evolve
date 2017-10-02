@@ -36,6 +36,23 @@ class TournamentSelector(ABCParentSelector):
         # set the individuals_per_tournament to self
         self.individuals_per_tournament = individuals_per_tournament
 
+    def _select_finalists(self, population: Union[list, ndarray]):
+        """
+        Select and return a set of finalists from a population.
+
+        Args:
+            population: the population to select finalists from
+
+        Returns: a subset of the population of size self.individuals_per_tournament
+        """
+        if self.individuals_per_tournament is None:
+            participants = population
+        else:
+            participants = random.choice(population,
+                                         size=self.individuals_per_tournament,
+                                         replace=self.replace)
+        return sorted(participants, key=lambda ind: ind.fitness, reverse=True)
+
     def select(self, population: Union[list, ndarray]):
         """
         Select a subset from the population.
@@ -45,21 +62,19 @@ class TournamentSelector(ABCParentSelector):
         """
         # call super to check the super parameters
         super(TournamentSelector, self).select(population)
-        # select a subset of random individuals
-        if self.individuals_per_tournament is None:
-            participants = population
-        else:
-            participants = random.choice(population,
-                                         size=self.individuals_per_tournament,
-                                         replace=self.replace)
-        individuals = sorted(participants,
-                             key=lambda ind: ind.fitness,
-                             reverse=True)
-        # if there is no size, return the first (highest)
-        if self.size is None:
-            return individuals[0]
-        # return up to size individuals
-        return individuals[:self.size]
+        # if the size is 1 or none (all) then no loop necessary
+        if self.size is None or self.size == 1:
+            return self._select_finalists(population)[:self.size]
+        # collect a set of winners of a certain size
+        winners = []
+        while len(winners) < self.size:
+            # select a winner
+            winner = self._select_finalists(population)[0]
+            # if replacement is off and the winner is already selected, continu
+            if not self.replace and winner in winners:
+                continue
+            winners.append(winner)
+        return winners
 
 
 # explicitly export classes

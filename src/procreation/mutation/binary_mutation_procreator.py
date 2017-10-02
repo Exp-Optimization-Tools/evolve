@@ -15,14 +15,19 @@ class BinaryMutationProcreator(MutationProcreatorABC):
         """
         super(BinaryMutationProcreator, self).__init__(mutation_rate)
 
-    def mutate(self, individual, inplace=True):
+    def mutate(self, individual, inplace=False):
         """Return a mutated copy of the individual."""
+        # super type checks individual and inplace
+        super(BinaryMutationProcreator, self).mutate(individual, inplace)
         # if it's a list or array, iterate over all the items
         if isinstance(individual, list):
             return [self.mutate(_ind, inplace=inplace) for _ind in individual]
-        flip = [random_sample() < self.mutation_rate for i in range(individual.size)]
+        # get the indexes of bits to flip
+        flip = [random_sample() < self.mutation_rate for _ in range(individual.size)]
+        # create a copy if not in place
         if not inplace:
             individual = individual.copy()
+        # flip the genes accordingly
         individual.genes[flip] = 1 - individual.genes[flip]
         return individual
 

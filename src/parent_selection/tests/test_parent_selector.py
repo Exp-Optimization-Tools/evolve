@@ -12,17 +12,49 @@ from ..parent_selector import *
 class ParentSelectorTestCase(unittest.TestCase):
     pass
 
+
 #
 # MARK: __init__()
 #
+
 
 class ShouldInstantiateABCParentSelector(ParentSelectorTestCase):
     def runTest(self):
         self.assertTrue(isinstance(ABCParentSelector(), ABCParentSelector))
 
+
+class ShouldRaiseErrorOnInvalidSizeType(ParentSelectorTestCase):
+    def runTest(self):
+        with self.assertRaises(TypeError):
+            ABCParentSelector(size='asdf')
+
+
+class ShouldRaiseErrorOnInvalidSizeBelowBounds(ParentSelectorTestCase):
+    def runTest(self):
+        with self.assertRaises(ValueError):
+            ABCParentSelector(size=-1)
+
+
+class ShouldInstantiateABCParentSelectorSize0(ParentSelectorTestCase):
+    def runTest(self):
+        self.assertTrue(isinstance(ABCParentSelector(size=0), ABCParentSelector))
+
+
+class ShouldRaiseErrorOnInvalidReplaceType(ParentSelectorTestCase):
+    def runTest(self):
+        with self.assertRaises(TypeError):
+            ABCParentSelector(replace='asdf')
+
+
+class ShouldInstantiateABCParentSelectorReplaceTrue(ParentSelectorTestCase):
+    def runTest(self):
+        self.assertTrue(isinstance(ABCParentSelector(replace=True), ABCParentSelector))
+
+
 #
 # MARK: select(population)
 #
+
 
 class ShouldRaiseErrorOnInvalidPopulationWrongType(ParentSelectorTestCase):
     def runTest(self):

@@ -44,6 +44,8 @@ class Evolutionary:
             population: the population to evolve
             iterations: the number of iterations to run (default 2000)
         """
+        # copy the population so the original is uneffected
+        population = list(population)
         # iterate from initial population size to iterations
         for iteration in range(len(population), iterations):
             # select parents
@@ -52,8 +54,8 @@ class Evolutionary:
             children = self.procreator.procreate(PARENTS)
             # mutate the children in place to save memory
             self.mutator.mutate(children, inplace=True)
-            # select survivors in the population
-            population = self.survivor_selector.select(population, PARENTS, children)
+            # select survivors in the population inplace
+            self.survivor_selector.select(population, PARENTS, children)
         return population
 
 

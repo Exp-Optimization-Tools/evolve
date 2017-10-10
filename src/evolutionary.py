@@ -50,7 +50,7 @@ class Evolutionary:
             PARENTS = self.parent_selector.select(population)
             # procreate children
             children = self.procreator.procreate(PARENTS)
-            # mutate the children
+            # mutate the children in place to save memory
             self.mutator.mutate(children, inplace=True)
             # select survivors in the population
             population = self.survivor_selector.select(population, PARENTS, children)

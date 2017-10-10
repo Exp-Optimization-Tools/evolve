@@ -25,6 +25,12 @@ class SurvivorSelectorABC:
 
         Returns: A population with the some distribution of replacement
         """
+        if not isinstance(population, (list, ndarray)):
+            raise TypeError('population must be of type: list, ndarray')
+        if not isinstance(parents, (list, ndarray)):
+            raise TypeError('parents must be of type: list, ndarray')
+        if not isinstance(children, (list, ndarray)):
+            raise TypeError('children must be of type: list, ndarray')
 
 
 # explicitly specify exports

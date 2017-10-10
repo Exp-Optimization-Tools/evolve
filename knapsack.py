@@ -110,6 +110,7 @@ def generational_algorithm(population: list,
 # parent_selector = TournamentSelector(size=2, replace=False, individuals_per_tournament=3)
 # procreator = NPointCrossoverProcreator(crossovers=1)
 # mutator = BinaryMutationProcreator(mutation_rate=0.005)
+# survivor_selector = GenerationalSurvivorSelector()
 # generational_algorithm(population, parent_selector, procreator, mutator)
 
 
@@ -140,9 +141,8 @@ def mu_mu_algorithm(population: list,
 parent_selector = TournamentSelector(size=2, replace=False, individuals_per_tournament=3)
 procreator = NPointCrossoverProcreator(crossovers=1)
 mutator = BinaryMutationProcreator(mutation_rate=0.05)
+survivor_selector = MuMuSurvivorSelector()
 mu_mu_algorithm(population, parent_selector, procreator, mutator)
-
-
 
 
 
@@ -151,3 +151,20 @@ print('final population')
 print(max([ind.fitness for ind in population]))
 # for individual in population:
 #     print('{}: {}'.format(individual, individual.fitness))
+
+
+
+
+def evolve(population: list,
+           parent_selector: ABCParentSelector,
+           procreator: CrossoverProcreatorABC,
+           mutator: MutationProcreatorABC,
+           survivor_selector: SurvivorSelectorABC,
+           iterations: int = 2000):
+    """A generalized form of the evolutionary algorithm."""
+    for iteration in range(len(population), iterations):
+        parents = parent_selector.select(population)
+        children = procreator.procreate(parents)
+        mutator.mutate(children, inplace=True)
+        population = survivor_selector.select(population, parents, children)
+    return population

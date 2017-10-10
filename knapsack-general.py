@@ -48,8 +48,8 @@ BAG_SIZE_FACTOR = 1 / 3
 BAG_SIZE = int(SIZE * WEIGHTS.mean() * BAG_SIZE_FACTOR)
 
 
-print('(scores)   V = {}'.format(VALUES))
-print('(weights)  W = {}'.format(WEIGHTS))
+print('(scores)   V = \n{}'.format(VALUES))
+print('(weights)  W = \n{}'.format(WEIGHTS))
 print('(bag size) c = {}'.format(BAG_SIZE))
 
 
@@ -77,8 +77,8 @@ factory = ChromosomeFactory(BinaryChromosome, SIZE,
                             initial_state='random')
 population = factory.population(20)
 
-# print('initial population')
-# print(max([ind.fitness for ind in population]))
+print('initial population')
+print(max([ind.fitness for ind in population]))
 # for individual in population:
 #     print('{}: {}'.format(individual, individual.fitness))
 
@@ -90,6 +90,12 @@ survivor_selector = GenerationalSurvivorSelector()
 generational = Evolutionary(parent_selector, procreator, mutator, survivor_selector)
 gen_pop = generational.evolve(population, iterations=2000)
 
+print('generational population')
+print(max([ind.fitness for ind in gen_pop]))
+# for individual in gen_pop:
+#     print('{}: {}'.format(individual, individual.fitness))
+
+
 # (mu, mu) replacement
 parent_selector = TournamentSelector(size=2, replace=False, individuals_per_tournament=3)
 procreator = NPointCrossoverProcreator(crossovers=1)
@@ -97,3 +103,8 @@ mutator = BinaryMutationProcreator(mutation_rate=0.05)
 survivor_selector = MuMuSurvivorSelector(mu=parent_selector.size)
 mu_mu = Evolutionary(parent_selector, procreator, mutator, survivor_selector)
 mu_mu_pop = mu_mu.evolve(population, iterations=2000)
+
+print('mu mu population population')
+print(max([ind.fitness for ind in mu_mu_pop]))
+# for individual in mu_mu_pop:
+#     print('{}: {}'.format(individual, individual.fitness))

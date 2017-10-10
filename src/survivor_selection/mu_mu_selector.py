@@ -30,7 +30,7 @@ class MuMuSurvivorSelector(SurvivorSelectorABC):
         # sort the population from worst to best fitness score
         population.sort(key=lambda ind: ind.fitness, reverse=True)
         [population.pop() for _ in range(self.mu)]
-        population += mutated_children
+        population += children
 
 
 # explicitly specify exports

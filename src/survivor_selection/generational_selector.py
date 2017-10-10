@@ -24,7 +24,7 @@ class GenerationalSurvivorSelector(SurvivorSelectorABC):
         # iterate over all the parents removing each from the population
         [population.remove(parent) for parent in parents if parent in population]
         # replace the parents with the new children
-        population += mutated_children
+        population += children
 
 
 # explicitly specify exports

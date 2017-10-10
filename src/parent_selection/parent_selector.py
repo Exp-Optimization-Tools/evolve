@@ -16,12 +16,11 @@ class ABCParentSelector:
             replace: whether to allow replacement when selecting
         """
         # check size. it can be: None, float, int
-        if size is None:
-            pass
-        elif not isinstance(size, (int, float)):
+        if isinstance(size, (int, float)):
+            if size < 0:
+                raise ValueError('size must be greater than 0')
+        elif size is not None:
             raise TypeError('size must be of type: int, float')
-        elif size < 0:
-            raise ValueError('size must be greater than 0')
         # check replace. it can be only a bool
         if not isinstance(replace, bool):
             raise TypeError('replace must be of type boolean')

@@ -1,4 +1,4 @@
-# evolutionary
+# Evolve
 
 <!-- Badges -->
 
@@ -9,7 +9,7 @@
 
 <!-- Tagline description -->
 
-Generalized forms of evolutionary algorithms using numpy.
+Generalized genetic algorithms using NumPy.
 
 
 # Usage
@@ -32,14 +32,6 @@ To run the test modules inside the [src][] package:
 
 ```shell
 make test
-```
-
-## Starting the application
-
-To execute the code in the [__main__.py][] script:
-
-```shell
-make start
 ```
 
 

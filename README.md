@@ -34,6 +34,19 @@ To run the test modules inside the [src][] package:
 make test
 ```
 
+# How Should I Cite Evolve?
+
+Please cite `Evolve` if you use it in your reseach using the following block:
+
+```bibtex
+@misc{kauten2017evolve,
+author = {Christian Kauten},
+title = {Evolve},
+year = {2017},
+publisher = {GitHub},
+howpublished = {\url{https://github.com/Kautenja/Evolve}},
+}
+```
 
 
 [Makefile]: ./Makefile

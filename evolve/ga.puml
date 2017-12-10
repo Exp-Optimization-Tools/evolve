@@ -1,0 +1,24 @@
+
+class GeneticAlgorithm {
+  evolve(population: List): List
+}
+GeneticAlgorithm *-- ParentSelector: parent_selector
+GeneticAlgorithm *-- Procreator: procreator
+GeneticAlgorithm *-- Mutator: mutator
+GeneticAlgorithm *-- SurvivorSelector: survivor_selector
+
+abstract class ParentSelector {
+
+}
+
+abstract class Procreator {
+
+}
+
+abstract class Mutator {
+
+}
+
+abstract class SurvivorSelector {
+
+}

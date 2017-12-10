@@ -9,12 +9,4 @@ install:
 
 # run the command to execute the unit tests
 test:
-	${PYTHON} -m unittest discover src
-
-# run the command to run the knapsack problem solver
-knapsack:
-	${PYTHON} knapsack.py
-
-# run the command to run the f6 problem solver
-f6:
-	${PYTHON} f6.py
+	${PYTHON} -m unittest discover evolve

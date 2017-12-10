@@ -4,8 +4,8 @@
 
 [![build-status][]][ci-server]
 
-[build-status]: https://travis-ci.org/Kautenja/Evolve.svg?branch=master
-[ci-server]: https://travis-ci.org/Kautenja/Evolve
+[build-status]: https://travis-ci.org/Kautenja/evolve.svg?branch=master
+[ci-server]: https://travis-ci.org/Kautenja/evolve
 
 <!-- Tagline description -->
 

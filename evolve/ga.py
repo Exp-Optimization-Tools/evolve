@@ -94,11 +94,11 @@ class GeneticAlgorithm(object):
 
     # TODO: use __call__ instead of evolve. more pythonic given that the class
     # is called GeneticAlgorithm implying that it is callable
-    def evolve(self,
-               population: list,
-               iterations: int=2000,
-               inplace: bool=False,
-               callback: Callable=None):
+    def __call__(self,
+                 population: list,
+                 iterations: int=2000,
+                 inplace: bool=False,
+                 callback: Callable=None):
         """
         Evolve the population for the given number of iterations.
 

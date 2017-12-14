@@ -3,10 +3,10 @@ from typing import Callable
 from tqdm import tqdm
 from numpy import array
 from pandas import DataFrame
-from .parent_selection import ParentSelector
+from .selection import ParentSelector
 from .procreation import Procreator
 from .mutation import Mutator
-from .survivor_selection import SurvivorSelector
+from .replacement import SurvivorSelector
 
 
 # the template string for the __repr__ method

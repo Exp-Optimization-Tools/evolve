@@ -1,6 +1,6 @@
 """This module contains the n-point crossover procreator class."""
 from typing import List, Union
-from numpy import arange, array, ndarray
+from numpy import arange, array, ndarray, zeros
 from numpy.random import choice
 from evolve.population import Chromosome
 from .procreator import Procreator
@@ -24,18 +24,6 @@ def cut_points(num_genes: int, crossovers: int):
     cuts = [0] + sorted(crossovers) + [num_genes]
     # rewrap the list of indexes into a list of tuples of indexes [lower, upper)
     return [(cuts[i], cuts[i + 1]) for i in range(len(cuts) - 1)]
-
-
-def flattened(some_list: list) -> list:
-    """
-    Return a flattened version of a list.
-
-    Args:
-        some_list: the list to flatten
-
-    Returns a 1D flattened version of a 2D list
-    """
-    return [item for sublist in some_list for item in sublist]
 
 
 class NPointCrossoverProcreator(Procreator):
@@ -72,32 +60,23 @@ class NPointCrossoverProcreator(Procreator):
         # verify that the size of the parents is more than the number of cuts
         if parents[0].size <= self.crossovers:
             raise ValueError('too many crossover points for chromosome size')
-        # # generate the list of indecies to cut along
-        # cuts = cut_points(parents[0].size, self.crossovers)
-        # # zip the indecies into ranges for indexing from parents
-        # cut_pairs = [(cuts[i], cuts[i + 1]) for i in range(len(cuts) - 1)]
-
-
-        # generate the list of index tuples to cut along
-        cut_pairs = cut_points(parents[0].size, self.crossovers)
-        # the list of lists that need crushed into a single list
-        child_pieces = [[] for _ in range(len(parents))]
-        # loop over the indexes and cuts in the cut pairs
-        for index, cut in enumerate(cut_pairs):
-            # loop over each parent to get the same number of children as
-            # parents
-            for parent_index in range(len(parents)):
-                # make a child piece by cutting the parent along the cut
-                child_piece = parents[parent_index].genes[cut[0]:cut[1]]
-                # append to the appropriate child piece list in a cyclical
-                # fashion using the index, parent index, and modulo of parent
-                # length
-                child_pieces[(parent_index + index) % len(parents)].append(child_piece)
-        # flatten the lists of pieces into single lists of bits
-        child_genes = [flattened(child_piece) for child_piece in child_pieces]
-        # create new genes by copying parents and replacing their genes, one
-        # could just use the parent at index 0, but this form is more general
-        return [parents[index].copy(genes=genes) for index, genes in enumerate(child_genes)]
+        # generate the list of indecies to cut along
+        cuts = cut_points(parents[0].size, self.crossovers)
+        # create the empty list of children
+        children = [zeros(parents[0].size), zeros(parents[0].size)]
+        # switch between the left and right parent
+        parent_index = 0
+        # iterate over all the cut pairs
+        for cut in cuts:
+            # build the cut range slice to reduce duplication
+            cut_range = slice(cut[0], cut[1])
+            # fetch the next pieces of the 2 chidlren based on cut range
+            children[0][cut_range] = parents[parent_index][cut_range]
+            children[1][cut_range] = parents[1 - parent_index][cut_range]
+            # invert the index to switch to the other parent on the next iter
+            parent_index = 1 - parent_index
+        # return a list of copies chromosome with the new child genes
+        return [parents[0].copy(genes=genes) for genes in children]
 
 
 # explicitly specify exports

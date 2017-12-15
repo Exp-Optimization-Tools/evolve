@@ -37,6 +37,17 @@ class Chromosome:
         # setup the cache
         self._cached_fitness = None
 
+    def __getitem__(self, gene):
+        """
+        Return the allele at the given key.
+
+        Args:
+            gene: the gene of the allele to get (index in gene set)
+
+        Returns: the allele at the given gene index
+        """
+        return self.genes[gene]
+
     def __lt__(self, other):
         """
         Compare this instance to another to see if it is less than the other.

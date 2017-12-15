@@ -2,9 +2,6 @@
 from unittest import TestCase
 from evolve.population import BinaryChromosome
 from ..procreator import *
-# random seed
-from numpy.random import seed
-seed(10)
 
 
 #

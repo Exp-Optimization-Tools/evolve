@@ -1,7 +1,6 @@
 """This module contains the n-point crossover procreator class."""
 from typing import List, Union
-from numba import jit
-from numpy import arange, random, array, ndarray
+from numpy import arange, array, ndarray
 from numpy.random import choice
 from evolve.population import Chromosome
 from .procreator import Procreator
@@ -18,7 +17,12 @@ def cut_points(num_genes: int, crossovers: int):
     Returns: an ordered list of cutpoint tuples in the [(first, last),...]
         format. first index is inclusive, last is not
     """
-    cuts = [0] + sorted(random.choice(arange(1, num_genes), size=crossovers, replace=False)) + [num_genes]
+    # use numpy to genereate an index based on the number of genes then select
+    # a random number equal to the number of crossovers _without_ replacement
+    crossovers = choice(arange(1, num_genes), size=crossovers, replace=False)
+    # generate the indexes to cut along including the first and last indeces
+    cuts = [0] + sorted(crossovers) + [num_genes]
+    # rewrap the list of indexes into a list of tuples of indexes [lower, upper)
     return [(cuts[i], cuts[i + 1]) for i in range(len(cuts) - 1)]
 
 
@@ -53,7 +57,7 @@ class NPointCrossoverProcreator(Procreator):
 
     def __repr__(self):
         """Return a string representation of this object."""
-        return '{}(crossovers={})'.format(self.__class__.__name__, self.crossovers)
+        return f'{self.__class__.__name__}(crossovers={self.crossovers})'
 
     def procreate(self, parents: Union[List[Chromosome], ndarray]) -> List[Chromosome]:
         """

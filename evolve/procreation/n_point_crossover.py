@@ -1,9 +1,25 @@
 """This module contains the n-point crossover procreator class."""
 from typing import List, Union
+from numba import jit
 from numpy import arange, random, array, ndarray
 from numpy.random import choice
 from evolve.population import Chromosome
 from .procreator import Procreator
+
+
+def cut_points(num_genes: int, crossovers: int):
+    """
+    Return a list of cutpoints for the chromosome size and crossover points.
+
+    Args:
+        num_genes: the size of the chromosome to cut up
+        crossovers: the number of crossover points
+
+    Returns: an ordered list of cutpoint tuples in the [(first, last),...]
+        format. first index is inclusive, last is not
+    """
+    cuts = [0] + sorted(random.choice(arange(1, num_genes), size=crossovers, replace=False)) + [num_genes]
+    return [(cuts[i], cuts[i + 1]) for i in range(len(cuts) - 1)]
 
 
 def flattened(some_list: list) -> list:
@@ -21,7 +37,7 @@ def flattened(some_list: list) -> list:
 class NPointCrossoverProcreator(Procreator):
     """This class performs n-point crossover parents."""
 
-    def __init__(self, crossovers: int = 1):
+    def __init__(self, crossovers: int=1):
         """
         Initialize a new n point crossover.
 
@@ -30,9 +46,9 @@ class NPointCrossoverProcreator(Procreator):
                         the default is single-point crossover
         """
         if not isinstance(crossovers, int):
-            raise TypeError('crossovers must be of type in')
+            raise TypeError('crossovers must be of type: int')
         if crossovers < 0:
-            raise ValueError('crossovers must >= 0')
+            raise ValueError('crossovers must greater than or equal to 0')
         self.crossovers = crossovers
 
     def __repr__(self):
@@ -52,12 +68,14 @@ class NPointCrossoverProcreator(Procreator):
         # verify that the size of the parents is more than the number of cuts
         if parents[0].size <= self.crossovers:
             raise ValueError('too many crossover points for chromosome size')
-        # generate the list of indecies to cut along
-        cuts = [0] + sorted(random.choice(arange(1, parents[0].size),
-                                          size=self.crossovers,
-                                          replace=False)) + [parents[0].size]
-        # zip the indecies into ranges for indexing from parents
-        cut_pairs = [(cuts[i], cuts[i + 1]) for i in range(len(cuts) - 1)]
+        # # generate the list of indecies to cut along
+        # cuts = cut_points(parents[0].size, self.crossovers)
+        # # zip the indecies into ranges for indexing from parents
+        # cut_pairs = [(cuts[i], cuts[i + 1]) for i in range(len(cuts) - 1)]
+
+
+        # generate the list of index tuples to cut along
+        cut_pairs = cut_points(parents[0].size, self.crossovers)
         # the list of lists that need crushed into a single list
         child_pieces = [[] for _ in range(len(parents))]
         # loop over the indexes and cuts in the cut pairs

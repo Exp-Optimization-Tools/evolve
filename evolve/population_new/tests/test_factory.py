@@ -2,6 +2,7 @@
 from unittest import TestCase
 import numpy as np
 from ..factory import ChromosomeFactory
+from ..factory import zeros, ones, random_sample, uniform_binary
 # from .._chromosome import Chromosome
 
 
@@ -105,40 +106,43 @@ class ShouldCreateChromosomeFactory(TestCase):
         ChromosomeFactory(10, dummy_decode, dummy_evaluate)
 
 
-class ShouldCreateChromosomeFactoryInitializationString(TestCase):
-    def test(self):
-        ChromosomeFactory(10, dummy_decode, dummy_evaluate, 'random')
-
-
-class ShouldCreateChromosomeFactoryInitializationTuple(TestCase):
-    def test(self):
-        ChromosomeFactory(10, dummy_decode, dummy_evaluate, (0, 1))
-
-
 #
 # MARK: next_individual
 #
 
 
-# class ShouldCreateChromosomeFromFactory(ChromosomeFactoryTestCase):
-#     def test(self):
-#         factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate)
-#
-#
-# class ShouldCreateBinaryChromosomeFromFactory(ChromosomeFactoryTestCase):
-#     def test(self):
-#         factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, 'zeros')
-#
-#
-# class ShouldCreateBinaryChromosomeFromFactory(ChromosomeFactoryTestCase):
-#     def test(self):
-#         factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, 'ones')
-#
-#
-# class ShouldCreateRealCodedChromosomeFromFactory(ChromosomeFactoryTestCase):
-#     def test(self):
-#         factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, (1, 2))
-#         self.assertTrue(isinstance(factory.next_individual, RealCodedChromosome))
-#         for gene in factory.next_individual.genes:
-#             self.assertTrue(gene >= 1)
-#             self.assertTrue(gene <= 2)
+class ShouldCreateChromosomeFromFactoryUniformBinary(TestCase):
+    def test(self):
+        np.random.seed(15)
+        factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, uniform_binary)
+        actual = factory.next_chromosome.alleles
+        expected = np.array([0, 0, 1, 1, 1])
+        print(actual)
+        self.assertTrue(np.array_equiv(expected, actual))
+
+
+class ShouldCreateChromosomeFromFactoryRandomSample(TestCase):
+    def test(self):
+        np.random.seed(1)
+        factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate)
+        actual = factory.next_chromosome.alleles
+        expected = np.array([0.09233859,
+                             0.18626021,
+                             0.34556073,
+                             0.39676747,
+                             0.53881673])
+        actual = np.around(1000 * actual)
+        expected = np.around(1000 * expected)
+        self.assertTrue(np.array_equiv(expected, actual))
+
+
+class ShouldCreateZerosChromosomeFromFactory(TestCase):
+    def test(self):
+        np.random.seed(2)
+        factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, zeros)
+
+
+class ShouldCreateOnesChromosomeFromFactory(TestCase):
+    def test(self):
+        np.random.seed(3)
+        factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, ones)

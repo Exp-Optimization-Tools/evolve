@@ -3,6 +3,10 @@ from typing import Callable, List
 import numpy as np
 from ._chromosome import Chromosome
 
+# TODO: determine a clean and effective way to handle the intialization. perhaps
+# instead of the current string / tuple method, use a user defined method that
+# takes the num_genes parameter to return the new allele sets. maybe write the
+# basic ones of these too like zeros, ones, random range, and gaussian.
 
 class ChromosomeFactory(object):
     """A factory for generating populations of chromosomes."""

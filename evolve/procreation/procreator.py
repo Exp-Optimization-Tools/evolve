@@ -1,4 +1,4 @@
-"""This module contains the crossover procreator abstract base class."""
+"""This module contains the procreator base class."""
 from typing import List, Union
 from abc import abstractmethod
 from numpy import ndarray
@@ -6,7 +6,7 @@ from evolve.population import Chromosome
 
 
 class Procreator:
-    """This class is an abstract base class for crossover procreators."""
+    """A base class for procreators."""
 
     def __repr__(self):
         """Return a string representation of this object."""

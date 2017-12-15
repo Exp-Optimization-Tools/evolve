@@ -1,5 +1,5 @@
 """This module contains the procreator base class."""
-from typing import List, Union
+from typing import List
 from abc import abstractmethod
 from numpy import ndarray
 from evolve.population import Chromosome
@@ -13,7 +13,7 @@ class Procreator:
         return f'{self.__class__.__name__}()'
 
     @abstractmethod
-    def procreate(self, parents: Union[List[Chromosome], ndarray]) -> List[Chromosome]:
+    def procreate(self, parents: List[Chromosome]) -> List[Chromosome]:
         """
         Return a list of new children generated from a list of parents.
 

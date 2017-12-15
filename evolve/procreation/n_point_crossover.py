@@ -1,5 +1,5 @@
 """This module contains the n-point crossover procreator class."""
-from typing import List, Union
+from typing import List
 from numpy import arange, array, ndarray, zeros
 from numpy.random import choice
 from evolve.population import Chromosome
@@ -47,7 +47,7 @@ class NPointCrossoverProcreator(Procreator):
         """Return a string representation of this object."""
         return f'{self.__class__.__name__}(crossovers={self.crossovers})'
 
-    def procreate(self, parents: Union[List[Chromosome], ndarray]) -> List[Chromosome]:
+    def procreate(self, parents: List[Chromosome]) -> List[Chromosome]:
         """
         Return a list of new children generated from a list of parents.
 

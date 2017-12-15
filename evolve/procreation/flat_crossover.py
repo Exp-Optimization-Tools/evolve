@@ -1,14 +1,14 @@
 """BLX-0.0 (Flat, Radcliffe's) Crossover Procreator."""
-from typing import List, Union
+from typing import List
 from numpy import ndarray, random
 from evolve.population import Chromosome
 from .procreator import Procreator
 
-
+# TODO: small probability parameter?
 class FlatCrossoverProcreator(Procreator):
     """BLX-0.0 (Flat, Radcliffe's) Crossover Procreator."""
 
-    def procreate(self, parents: Union[List[Chromosome], ndarray]) -> List[Chromosome]:
+    def procreate(self, parents: List[Chromosome]) -> List[Chromosome]:
         """
         Return a list of new children generated using flat crossover.
         Note: flat crossover replaces each gene with a random number between

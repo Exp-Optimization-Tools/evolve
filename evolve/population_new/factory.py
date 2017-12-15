@@ -58,25 +58,26 @@ class ChromosomeFactory(object):
         self.initialization = initialization
 
     @property
-    def next_individual(self) -> Chromosome:
-        """Create and return a new individual."""
+    def next_chromosome(self) -> Chromosome:
+        """Create and return a new chromosome."""
         # generate genes
         # TODO: generate genes according to `initialization`
         genes = None
         # build a chromosome and return it
         return Chromosome(genes, self.decode, self.evaluate)
 
+    def make_chromosomes(self, size: int) -> List[Chromosome]:
+        """
+        Return a population of new chromosomes of given size.
 
-    # def population(self, size: int) -> List[Chromosome]:
-    #     """
-    #     Return a population of new chromosomes of given size.
-    #
-    #     Args:
-    #         size: the number of individuals to generate
-    #     """
-    #     if not isinstance(size, (int, float)) or size < 0:
-    #         raise ValueError('size must be a positive number')
-    #     return [self.next_individual for _ in range(int(size))]
+        Args:
+            size: the number of individuals to generate
+
+        Returns: a list of new chromosomes
+        """
+        if not isinstance(size, int) or size < 0:
+            raise ValueError('size must be a positive int')
+        return [self.next_chromosome for _ in range(size)]
 
 
 __all__ = ['ChromosomeFactory']

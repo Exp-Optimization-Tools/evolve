@@ -10,7 +10,7 @@ class Procreator:
 
     def __repr__(self):
         """Return a string representation of this object."""
-        return '{}()'.format(self.__class__.__name__)
+        return f'{self.__class__.__name__}()'
 
     @abstractmethod
     def procreate(self, parents: Union[List[Chromosome], ndarray]) -> List[Chromosome]:

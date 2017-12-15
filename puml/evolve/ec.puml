@@ -1,0 +1,27 @@
+
+' the general algorithm this framework attempts to implement
+class EvolutionaryComputation {
+  evolve(population: List): List
+}
+' 1 is the norm, but * represents potential ensemble solutions
+EvolutionaryComputation "1" *-- "1..*" Selector: selector
+' it's common to have more than 1. i.e. a crossover and mutator or
+' some other form of more extoic ensemble of operators
+EvolutionaryComputation "1" *--- "1..*" Variator: variator
+' 1 is the norm, but * represents potential ensemble solutions
+EvolutionaryComputation "1" *-- "1..*" Replacer: replace
+
+' selects parents from the population
+abstract class Selector {
+
+}
+
+' varies parents to generate children
+abstract class Variator {
+
+}
+
+' replaces individuals in the population with children
+abstract class Replacer {
+
+}

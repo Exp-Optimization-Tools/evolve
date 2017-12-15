@@ -1,0 +1,30 @@
+
+' a population of chromosomes (potential candidate solutions)
+class Population {
+
+}
+Population "1" *-- "*" Chromosome: members >
+
+' a chromosome (candidate solution) in an evoutionary computation
+class Chromosome {
+
+}
+Chromosome "1" *-- "1" Genotype: genotype >
+Chromosome "1" *-- "1" Phenotype: phenotype >
+
+' a genotypic mapping for a chromosome
+class Genotype {
+
+}
+Genotype "1" *-- "*" Gene: genes >
+
+' a single gene in a chromosome
+class Gene {
+	' the value of the gene is known as the allele
+	+ allele: Scalar
+}
+
+' a phenotypic mapping for a chromosome
+class Phenotype {
+	+ fitness(): Scalar
+}

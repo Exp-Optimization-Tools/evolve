@@ -3,10 +3,13 @@
 <!-- Badges -->
 
 [![build-status][]][ci-server]
+[![python-badge][]][python]
+
 
 [build-status]: https://travis-ci.org/Kautenja/evolve.svg?branch=master
 [ci-server]: https://travis-ci.org/Kautenja/evolve
-
+[python-badge]: https://img.shields.io/badge/python-3.6-blue.svg
+[python]: https://www.python.org
 
 <!-- Tagline description -->
 

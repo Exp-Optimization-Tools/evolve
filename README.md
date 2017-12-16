@@ -10,7 +10,7 @@
 
 <!-- Tagline description -->
 
-Generalized genetic algorithms using NumPy.
+Evolutionary Computation (EC) using NumPy.
 
 
 # Usage

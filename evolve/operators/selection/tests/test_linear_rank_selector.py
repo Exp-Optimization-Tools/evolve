@@ -1,7 +1,8 @@
 """This module tests the linear_rank_selector module."""
 import unittest
 from numpy import array, ndarray
-from evolve.population import BinaryChromosome, ChromosomeFactory
+from evolve.population_new import ChromosomeFactory
+from evolve.population_new.factory import zeros, ones, random_sample
 from ..selector import Selector
 from ..linear_rank_selector import *
 
@@ -17,18 +18,12 @@ def evaluate(genes: ndarray):
 
 class LinearRankSelectorTestCase(unittest.TestCase):
     def setUp(self):
-        self.zerofactory = ChromosomeFactory(BinaryChromosome, 5,
-                                             evaluate=evaluate,
-                                             initial_state='zeros')
-        self.onesfactory = ChromosomeFactory(BinaryChromosome, 5,
-                                             evaluate=evaluate,
-                                             initial_state='ones')
-        self.randfactory = ChromosomeFactory(BinaryChromosome, 5,
-                                             evaluate=evaluate,
-                                             initial_state='random')
-        self.zeropopulation = self.zerofactory.population(10)
-        self.onespopulation = self.onesfactory.population(10)
-        self.randpopulation = self.randfactory.population(10)
+        self.zerofactory = ChromosomeFactory(3, lambda x: x, lambda x: x.sum(), zeros)
+        self.onesfactory = ChromosomeFactory(3, lambda x: x, lambda x: x.sum(), ones)
+        self.randfactory = ChromosomeFactory(3, lambda x: x, lambda x: x.sum(), random_sample)
+        self.zeropopulation = self.zerofactory.make_chromosomes(10)
+        self.onespopulation = self.onesfactory.make_chromosomes(10)
+        self.randpopulation = self.randfactory.make_chromosomes(10)
         self.one_and_zero = [self.zeropopulation[0], self.onespopulation[1]]
 
 
@@ -38,7 +33,7 @@ class LinearRankSelectorTestCase(unittest.TestCase):
 
 
 class ShouldInstantiateLinearRankSelelctor(LinearRankSelectorTestCase):
-    def runTest(self):
+    def test(self):
         self.assertTrue(isinstance(LinearRankSelector(), Selector))
         self.assertTrue(isinstance(LinearRankSelector(), LinearRankSelector))
 
@@ -49,21 +44,21 @@ class ShouldInstantiateLinearRankSelelctor(LinearRankSelectorTestCase):
 
 
 class ShouldRaiseErrorOnInvalidPopulationWrongType(LinearRankSelectorTestCase):
-    def runTest(self):
+    def test(self):
         sel = LinearRankSelector()
         with self.assertRaises(TypeError):
             sel.select('asdfasdfasdf')
 
 
 class ShouldSelectProportionately(LinearRankSelectorTestCase):
-    def runTest(self):
+    def test(self):
         sel = LinearRankSelector()
-        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation).genes))
-        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation).genes))
+        self.assertEqual([0, 0, 0], list(sel.select(self.zeropopulation)[0].alleles))
+        self.assertEqual([1, 1, 1], list(sel.select(self.onespopulation)[0].alleles))
 
 
 class ShouldSelectProportionatelySize2(LinearRankSelectorTestCase):
-    def runTest(self):
+    def test(self):
         sel = LinearRankSelector(size=2)
-        self.assertEqual([0,0,0,0,0], list(sel.select(self.zeropopulation)[0].genes))
-        self.assertEqual([1,1,1,1,1], list(sel.select(self.onespopulation)[0].genes))
+        self.assertEqual([0, 0, 0], list(sel.select(self.zeropopulation)[0].alleles))
+        self.assertEqual([1, 1, 1], list(sel.select(self.onespopulation)[0].alleles))

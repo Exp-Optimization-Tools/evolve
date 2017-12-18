@@ -5,15 +5,18 @@ The proportionate selector is susceptible to:
 *   the super individual problem
 *   loss of selection pressure as the algorithm converges
 """
-from typing import Union
-from numpy import ndarray, sum, random
+from typing import List
+from numpy import sum, random
+from evolve.population_new._chromosome import Chromosome
 from .selector import Selector
 
 
 class ProportionateSelector(Selector):
     """A class for performing proportionate parent selection."""
 
-    def select(self, population: Union[list, ndarray], maximize=True):
+    def select(self,
+               population: List[Chromosome],
+               maximize=True) -> List[Chromosome]:
         """
         Select a subset from the population.
 

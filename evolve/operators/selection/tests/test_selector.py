@@ -1,6 +1,5 @@
 """This module tests the parent_selector module."""
 from unittest import TestCase
-from numpy import array
 from ..selector import Selector
 
 
@@ -58,9 +57,3 @@ class ShouldNotRaiseErrorOnValidPopulationList(TestCase):
     def runTest(self):
         sel = Selector()
         self.assertIsNone(sel.select([]))
-
-
-class ShouldNotRaiseErrorOnValidPopulationArray(TestCase):
-    def runTest(self):
-        sel = Selector()
-        self.assertIsNone(sel.select(array([])))

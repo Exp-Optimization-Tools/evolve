@@ -3,8 +3,9 @@ This module contains a class for tournament parent selection.
 
 *   selection pressure increases and decreases with k
 """
-from typing import Union
-from numpy import ndarray, random
+from typing import List
+from numpy import random
+from evolve.population_new._chromosome import Chromosome
 from .selector import Selector
 
 
@@ -12,9 +13,9 @@ class TournamentSelector(Selector):
     """A class for performing tournament parent selection."""
 
     def __init__(self,
-                 size: int = None,
-                 replace: bool = True,
-                 individuals_per_tournament: int = None):
+                 size: int=None,
+                 replace: bool=True,
+                 individuals_per_tournament: int=None) -> None:
         """
         Initialize a new tournament selector.
 
@@ -36,7 +37,7 @@ class TournamentSelector(Selector):
         # set the individuals_per_tournament to self
         self.individuals_per_tournament = individuals_per_tournament
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Return a string representation of this object."""
         return '{}(size={}, replace={}, individuals_per_tournament={})'.format(*[
             self.__class__.__name__,
@@ -45,7 +46,9 @@ class TournamentSelector(Selector):
             self.individuals_per_tournament
         ])
 
-    def _select_finalists(self, population: Union[list, ndarray], maximize=True):
+    def _select_finalists(self,
+                          population: List[Chromosome],
+                          maximize=True) -> List[Chromosome]:
         """
         Select and return a set of finalists from a population.
 
@@ -64,7 +67,9 @@ class TournamentSelector(Selector):
                                          replace=self.replace)
         return sorted(participants, key=lambda ind: ind.fitness, reverse=maximize)
 
-    def select(self, population: Union[list, ndarray], maximize=True):
+    def select(self,
+               population: List[Chromosome],
+               maximize=True) -> List[Chromosome]:
         """
         Select a subset of tournament winners from the population.
 

@@ -1,6 +1,5 @@
 """A module containing the replacer abstract base class."""
-from typing import Union, List
-from numpy import ndarray
+from typing import List
 from abc import abstractmethod
 from evolve.population_new._chromosome import Chromosome
 
@@ -14,9 +13,9 @@ class Replacer(object):
 
     @abstractmethod
     def select(self,
-               population: Union[List[Chromosome], ndarray],
-               parents: Union[List[Chromosome], ndarray],
-               children: Union[List[Chromosome], ndarray]) -> List[Chromosome]:
+               population: List[Chromosome],
+               parents: List[Chromosome],
+               children: List[Chromosome]) -> List[Chromosome]:
         """Return a population with the children replacing the parents.
 
         Args:

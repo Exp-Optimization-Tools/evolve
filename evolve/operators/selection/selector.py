@@ -1,13 +1,13 @@
 """This module contains the abstract base class for parent selection."""
+from typing import List
 from abc import abstractmethod
-from typing import Union
-from numpy import ndarray
+from evolve.population_new._chromosome import Chromosome
 
 
-class Selector:
+class Selector(object):
     """An abstract base class outlining the API for parent selection"""
 
-    def __init__(self, size: int=None, replace: bool=True):
+    def __init__(self, size: int=None, replace: bool=True) -> None:
         """
         Initialize a new abstract base parent selector.
 
@@ -28,7 +28,7 @@ class Selector:
         self.size = size
         self.replace = replace
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Return a string representation of this object."""
         return '{}(size={}, replace={})'.format(*[
             self.__class__.__name__,
@@ -37,18 +37,18 @@ class Selector:
         ])
 
     @abstractmethod
-    def select(self, population: Union[list, ndarray]):
+    def select(self, population: List[Chromosome]) -> List[Chromosome]:
         """
         Select a subset from the population.
 
         Args:
-            population: the list of Chromosomes to select from
+            population: the list of Chromosome(s) to select from
+
+        Returns: a list of selected Chromosome(s)
         """
-        if not isinstance(population, (list, ndarray)):
-            raise TypeError('population should be one of types: array, list')
+        if not isinstance(population, list):
+            raise TypeError('population should be one of types: list')
 
 
 # explicitly export classes
-__all__ = [
-    'Selector'
-]
+__all__ = ['Selector']

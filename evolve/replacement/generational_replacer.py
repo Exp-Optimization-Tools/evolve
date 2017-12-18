@@ -5,8 +5,8 @@ from evolve.population import Chromosome
 from .replacer import Replacer
 
 
-class GenerationalSurvivorSelector(Replacer):
-    """A class for selecting survivors generationally."""
+class GenerationalReplacer(Replacer):
+    """A class for selecting survivors by generation."""
 
     def select(self,
                population: Union[List[Chromosome], ndarray],
@@ -34,5 +34,5 @@ class GenerationalSurvivorSelector(Replacer):
 
 # explicitly specify exports
 __all__ = [
-    'GenerationalSurvivorSelector'
+    'GenerationalReplacer'
 ]

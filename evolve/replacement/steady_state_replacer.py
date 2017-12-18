@@ -6,11 +6,11 @@ from evolve.population import Chromosome
 from .replacer import Replacer
 
 
-class SteadyStateSurvivorSelector(Replacer):
+class SteadyStateReplacer(Replacer):
     """A class for selecting survivors using steady state replacement."""
 
     def __init__(self, size: int):
-        """Intanstiate a new steady state selector."""
+        """Instantiate a new steady state selector."""
         if not isinstance(size, (float, int)):
             # size must be a number, but isnt. raise an error
             raise TypeError('size must be of type: float, int')
@@ -31,7 +31,7 @@ class SteadyStateSurvivorSelector(Replacer):
             population: the population to mutate
             parents: the population of parents that were selected
             children: the population of children that were generated
-            maximize: whether to maxmimize the fitness scores
+            maximize: whether to maximize the fitness scores
 
         Returns: A population with the some distribution of replacement
         """
@@ -48,5 +48,5 @@ class SteadyStateSurvivorSelector(Replacer):
 
 # explicitly specify exports
 __all__ = [
-    'SteadyStateSurvivorSelector'
+    'SteadyStateReplacer'
 ]

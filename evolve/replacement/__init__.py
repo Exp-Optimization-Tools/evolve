@@ -1,4 +1,4 @@
-"""This package contains modules for selecting survivors from a population."""
+"""This package contains modules for replacing populations."""
 from .replacer import Replacer
-from .generational_replacer import GenerationalSurvivorSelector
-from .steady_state_replacer import SteadyStateSurvivorSelector
+from .generational_replacer import GenerationalReplacer
+from .steady_state_replacer import SteadyStateReplacer

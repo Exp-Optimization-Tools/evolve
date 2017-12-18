@@ -11,18 +11,18 @@ from ..steady_state_replacer import *
 class init_ShouldRaiseErrorOnMissingParameters0(TestCase):
     def test(self):
         with self.assertRaises(TypeError):
-            SteadyStateSurvivorSelector()
+            SteadyStateReplacer()
 
 
 class init_ShouldRaiseErrorOnInvalidParameters0(TestCase):
     def test(self):
         with self.assertRaises(TypeError):
-            SteadyStateSurvivorSelector(size='asdf')
+            SteadyStateReplacer(size='asdf')
 
 
 class init_ShouldInstantiate(TestCase):
     def test(self):
-        SteadyStateSurvivorSelector(size=0)
+        SteadyStateReplacer(size=0)
 
 
 #
@@ -41,7 +41,7 @@ class T:
 
 class select_ShouldSelect(TestCase):
     def test(self):
-        sel = SteadyStateSurvivorSelector(size=1)
+        sel = SteadyStateReplacer(size=1)
         expected = [3, 2, 0]
         p = sel.select([T(1), T(2), T(3)], [T(2), T(3)], [T(0)], True)
         for person, fitness in zip(p, expected):

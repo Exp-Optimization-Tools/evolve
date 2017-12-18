@@ -10,7 +10,7 @@ from ..generational_replacer import *
 
 class init_ShouldInstantiate(TestCase):
     def test(self):
-        GenerationalSurvivorSelector()
+        GenerationalReplacer()
 
 
 #

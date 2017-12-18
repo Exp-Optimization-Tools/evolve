@@ -1,6 +1,10 @@
 """Test cases for the GeneticAlgorithm class."""
 from unittest import TestCase
-from evolve import *
+from evolve.ga import *
+from evolve.operators.selection import Selector
+from evolve.operators.procreation import Procreator
+from evolve.operators.mutation import Mutator
+from evolve.operators.replacement import Replacer
 
 
 #

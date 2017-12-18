@@ -14,7 +14,9 @@ the subset of items that fits in the container such that the value of the
 subset is maximized.
 """
 from unittest import TestCase
-from evolve import *
+from evolve.ga import GeneticAlgorithm
+from evolve.operators import *
+from evolve.population import *
 import numpy as np
 from random import shuffle
 from numpy.random import seed

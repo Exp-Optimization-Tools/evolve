@@ -3,10 +3,10 @@ from typing import Callable
 from tqdm import tqdm
 from numpy import array
 from pandas import DataFrame
-from .selection import Selector
-from .procreation import Procreator
-from .mutation import Mutator
-from .replacement import Replacer
+from .operators.selection import Selector
+from .operators.procreation import Procreator
+from .operators.mutation import Mutator
+from .operators.replacement import Replacer
 
 
 # the template string for the __repr__ method

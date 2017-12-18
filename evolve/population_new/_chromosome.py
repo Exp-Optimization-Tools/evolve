@@ -18,7 +18,8 @@ class Chromosome(object):
     def __init__(self,
                  alleles: np.ndarray,
                  decode: Callable,
-                 evaluate: Callable) -> None:
+                 evaluate: Callable,
+                 allele_type=float) -> None:
         """
         Initialize a new candidate solution.
 
@@ -27,14 +28,19 @@ class Chromosome(object):
                 * the genes derive from the index of the alleles
             decode: a method that converts the gene set to a candidate solution
             evaluate: a method that evaluates fitness of candidate solutions
+            allele_type: the type for the alleles (default float)
         """
         # Ignore all type checking, this module is private to the framework
-        self.alleles = alleles
+        self.alleles = np.array(alleles, dtype=allele_type)
         self.decode = decode
         self.evaluate = evaluate
         # setup the cache objects
         self._phenotype_cache = None
         self._fitness_cache = None
+
+    def copy(self):
+        """Return a copy of this chromosome."""
+        return self.__class__(self.alleles, self.decode, self.evaluate)
 
     def __repr__(self) -> str:
         """Return a string representation of this object that can execute."""

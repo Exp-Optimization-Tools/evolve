@@ -1,11 +1,11 @@
 """This module contains the mutation abstract base class."""
 from typing import Union, List
 from abc import abstractmethod
-from evolve.population import Chromosome
+from evolve.population_new._chromosome import Chromosome
 
 
 class Mutator:
-    """This class is an abstract base class for mutation procreators."""
+    """This class is an abstract base class for mutators."""
 
     def __init__(self, mutation_rate: float):
         """
@@ -31,7 +31,7 @@ class Mutator:
     @abstractmethod
     def mutate(self,
                individual: Union[Chromosome, List[Chromosome]],
-               inplace: bool = False) -> Union[Chromosome, List[Chromosome]]:
+               inplace: bool=False) -> Union[Chromosome, List[Chromosome]]:
         """
         Return a mutated copy of the individual.
 
@@ -44,7 +44,7 @@ class Mutator:
         # make sure individual is a chromosome or list of them
         if not isinstance(individual, (Chromosome, list)):
             raise TypeError('can only mutate subclasses of Chromosome (and lists of them)')
-        # make sure inplace is a boolean value
+        # make sure in-place is a boolean value
         if not isinstance(inplace, bool):
             raise TypeError('inplace must be a boolean value')
         # do nothing, return the input

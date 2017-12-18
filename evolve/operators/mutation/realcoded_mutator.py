@@ -4,7 +4,7 @@ from numpy.random import random_sample
 from .mutator import Mutator
 
 
-class RealCodedMutationProcreator(Mutator):
+class RealCodedMutator(Mutator):
     """This class performs real-coded mutation on parents."""
 
     def __init__(self, mutation_rate: float, random_state=(0, 1)):
@@ -15,7 +15,7 @@ class RealCodedMutationProcreator(Mutator):
             mutation_rate: the mutation rate for the mutator
             random_state: the range of random states to generate numbers in
         """
-        super(RealCodedMutationProcreator, self).__init__(mutation_rate)
+        super(RealCodedMutator, self).__init__(mutation_rate)
         if not isinstance (random_state, tuple) or len(random_state) < 2:
             raise TypeError('random_state should be a tuple of lowe and upper bounds. i.e. (0, 1)')
         self.low = random_state[0]
@@ -36,22 +36,22 @@ class RealCodedMutationProcreator(Mutator):
     def mutate(self, individual, inplace=False):
         """Return a mutated copy of the individual."""
         # super type checks individual and in-place
-        super(RealCodedMutationProcreator, self).mutate(individual, inplace)
+        super(RealCodedMutator, self).mutate(individual, inplace)
         # if it's a list or array, iterate over all the items
         if isinstance(individual, list):
             return [self.mutate(_ind, inplace=inplace) for _ind in individual]
         # create a copy if not in place
         if not inplace:
             individual = individual.copy()
-        # get the indexes of genes to randomize
-        randomize = array([random_sample() < self.mutation_rate for _ in range(individual.size)])
-        # randomize the genes accordingly, use the sum of booleans to determine
+        # get the genes of alleles to randomize
+        randomize = array([random_sample() < self.mutation_rate for _ in individual])
+        # randomize the alleles accordingly, use the sum of booleans to determine
         # random outputs to calculate
-        individual.genes[randomize] = self.low + random_sample(randomize.sum()) * self.range
+        individual.alleles[randomize] = self.range * random_sample(randomize.sum()) + self.low
         return individual
 
 
 # explicitly specify exports
 __all__ = [
-    'RealCodedMutationProcreator'
+    'RealCodedMutator'
 ]

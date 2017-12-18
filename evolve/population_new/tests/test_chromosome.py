@@ -62,7 +62,7 @@ def arb_chromosome():
 class repr_ShouldReturnRepresentation(TestCase):
     def test(self):
         arb = arb_chromosome()
-        _repr = 'Chromosome(alleles=[1 1 1], decode=dummy_decode, evaluate=dummy_evaluate)'
+        _repr = 'Chromosome(alleles=[ 1.  1.  1.], decode=dummy_decode, evaluate=dummy_evaluate)'
         self.assertEqual(_repr, repr(arb))
 
 
@@ -74,7 +74,7 @@ class repr_ShouldReturnRepresentation(TestCase):
 class str_ShouldReturnRepresentation(TestCase):
     def test(self):
         arb = arb_chromosome()
-        _str = '3'
+        _str = '3.0'
         self.assertEqual(_str, str(arb))
 
 

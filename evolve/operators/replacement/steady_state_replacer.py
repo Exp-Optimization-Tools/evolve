@@ -1,7 +1,5 @@
 """A module containing an implementation of steady state replacement."""
-from typing import Union, List
-from numpy import ndarray
-from numba import jit
+from typing import List
 from evolve.population import Chromosome
 from .replacer import Replacer
 
@@ -11,19 +9,19 @@ class SteadyStateReplacer(Replacer):
 
     def __init__(self, size: int):
         """Instantiate a new steady state selector."""
-        if not isinstance(size, (float, int)):
-            # size must be a number, but isnt. raise an error
-            raise TypeError('size must be of type: float, int')
-        self.size = int(size)
+        if not isinstance(size, int):
+            # size must be a number, but isn't. raise an error
+            raise TypeError('size must be of type: int')
+        self.size = size
 
     def __repr__(self):
         """Return a string representation of this object."""
         return '{}(size={})'.format(self.__class__.__name__, self.size)
 
     def select(self,
-               population: Union[List[Chromosome], ndarray],
-               parents: Union[List[Chromosome], ndarray],
-               children: Union[List[Chromosome], ndarray],
+               population: List[Chromosome],
+               parents: List[Chromosome],
+               children: List[Chromosome],
                maximize=True) -> List[Chromosome]:
         """Return a population with the children replacing the parents.
 

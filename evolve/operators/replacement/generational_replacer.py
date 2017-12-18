@@ -1,6 +1,5 @@
 """A module containing an implementation of generational replacement."""
-from typing import Union, List
-from numpy import ndarray
+from typing import List
 from evolve.population import Chromosome
 from .replacer import Replacer
 
@@ -9,9 +8,9 @@ class GenerationalReplacer(Replacer):
     """A class for selecting survivors by generation."""
 
     def select(self,
-               population: Union[List[Chromosome], ndarray],
-               parents: Union[List[Chromosome], ndarray],
-               children: Union[List[Chromosome], ndarray],
+               population: List[Chromosome],
+               parents: List[Chromosome],
+               children: List[Chromosome],
                **kwargs) -> List[Chromosome]:
         """Return a population with the children replacing the parents.
 

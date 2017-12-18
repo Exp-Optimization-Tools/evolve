@@ -39,12 +39,6 @@ class select_ShouldSelect0(TestCase):
         sel.select([], [], [])
 
 
-class select_ShouldSelect1(TestCase):
-    def test(self):
-        sel = Replacer()
-        sel.select(array([]), array([]), array([]))
-
-
 class select_ShouldRaiseErrorInvalidParameter0(TestCase):
     def test(self):
         sel = Replacer()

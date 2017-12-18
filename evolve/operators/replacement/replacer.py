@@ -2,7 +2,7 @@
 from typing import Union, List
 from numpy import ndarray
 from abc import abstractmethod
-from evolve.population import Chromosome
+from evolve.population_new._chromosome import Chromosome
 
 
 class Replacer(object):
@@ -26,12 +26,12 @@ class Replacer(object):
 
         Returns: A population with the some distribution of replacement
         """
-        if not isinstance(population, (list, ndarray)):
-            raise TypeError('population must be of type: list, ndarray')
-        if not isinstance(parents, (list, ndarray)):
-            raise TypeError('parents must be of type: list, ndarray')
-        if not isinstance(children, (list, ndarray)):
-            raise TypeError('children must be of type: list, ndarray')
+        if not isinstance(population, list):
+            raise TypeError('population must be of type: list')
+        if not isinstance(parents, list):
+            raise TypeError('parents must be of type: list')
+        if not isinstance(children, list):
+            raise TypeError('children must be of type: list')
 
 
 # explicitly specify exports

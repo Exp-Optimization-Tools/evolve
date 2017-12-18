@@ -12,7 +12,7 @@ def dummy_decode(genes: np.ndarray):
 
 
 def dummy_evaluate(phenotype: np.ndarray):
-    """A dummy evaluater that returns the sum of the CS"""
+    """A dummy evaluation method that returns the sum of the CS"""
     return phenotype.sum()
 
 
@@ -114,10 +114,12 @@ class ShouldCreateChromosomeFactory(TestCase):
 class ShouldCreateChromosomeFromFactoryUniformBinary(TestCase):
     def test(self):
         np.random.seed(15)
-        factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, uniform_binary)
+        factory = ChromosomeFactory(5,
+                                    dummy_decode,
+                                    dummy_evaluate,
+                                    uniform_binary)
         actual = factory.next_chromosome.alleles
         expected = np.array([0, 0, 1, 1, 1])
-        print(actual)
         self.assertTrue(np.array_equiv(expected, actual))
 
 
@@ -140,9 +142,15 @@ class ShouldCreateZerosChromosomeFromFactory(TestCase):
     def test(self):
         np.random.seed(2)
         factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, zeros)
+        actual = factory.next_chromosome.allelesg
+        expected = np.array([0, 0, 0, 0, 0])
+        self.assertTrue(np.array_equiv(expected, actual))
 
 
 class ShouldCreateOnesChromosomeFromFactory(TestCase):
     def test(self):
         np.random.seed(3)
         factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, ones)
+        actual = factory.next_chromosome.alleles
+        expected = np.array([1, 1, 1, 1, 1])
+        self.assertTrue(np.array_equiv(expected, actual))

@@ -62,6 +62,52 @@ class LinearRankSelector(Selector):
                                 replace=self.replace, p=p)
         return [pop[i] for i in indexes]
 
+    def _subjective_fitnesses(self, ranked: List[Chromosome]) -> List[float]:
+        """
+        Return a list of subjective fitnesses for a population.
+
+        Args:
+            ranked: the list of RANKED individuals
+
+        Returns: a list of subjective fitnesses based on rank and score
+        """
+        P = len(ranked)
+        scores = [individual.fitness for individual in ranked]
+        min_score = min(scores)
+        max_score = max(scores)
+        dScore = max_score - min_score
+        # the list of ranked scores
+        subjective_fitnesses = []
+        # generate subjective fitness scores for each individual based on
+        # their fitness and rank
+        for rank, individual in enumerate(ranked):
+            subjective_fitness = (P - rank) * dScore / (P - 1) + min_score
+            subjective_fitnesses.append(subjective_fitness)
+        return subjective_fitnesses
+
+    def _probabilities(self,
+                       subjective_fitnesses: List[float],
+                       maximize: bool) -> List[float]:
+        """
+        Return probabilities based on subjective fitnesses.
+
+        Args:
+            subjective_fitnesses: the list of subjective fitness scores
+            maximize: whether to maximize of minimize the fitness score
+
+        Returns: a list of probabilities. (the L1 norm of the fitnesses)
+        """
+        if sum(subjective_fitnesses) == 0:
+            # if the sum is 0, the selection is purely random
+            return None
+        else:
+            if maximize:
+                # maximize is standard functionality so return the L1 norm
+                return subjective_fitnesses / sum(subjective_fitnesses)
+            else:
+                # minimizing, return the _inverted_ L1 norm
+                return 1 - (subjective_fitnesses / sum(subjective_fitnesses))
+
     def select(self,
                population: List[Chromosome],
                maximize=True) -> List[Chromosome]:
@@ -78,31 +124,12 @@ class LinearRankSelector(Selector):
         super(LinearRankSelector, self).select(population)
         # sort the population by their fitness
         ranked = sorted(population, reverse=True)
-        # calculate some static values for readability, mild performance
-        P = len(population)
-        scores = [individual.fitness for individual in ranked]
-        min_score = min(scores)
-        max_score = max(scores)
-        dScore = max_score - min_score
-        # the list of ranked scores
-        ranked_scores = []
-        # generate subjective fitness scores for each individual based on
-        # their fitness and rank
-        for rank, individual in enumerate(ranked):
-            subjective_fitness = (P - rank) * dScore / (P - 1) + min_score
-            ranked_scores.append(subjective_fitness)
+        # determine the subjective fitnesses based on rank and fitness
+        subjective_fitnesses = self._subjective_fitnesses(ranked)
         # generate a list of probabilities based on ranked scores
-        if sum(ranked_scores) == 0:
-            # if the sum is 0, the selection is purely random
-            probablities = None
-        else:
-            # generate probabilities from the subject ranks
-            probablities = ranked_scores / sum(ranked_scores)
-            if not maximize:
-                # invert probabilities to minimize
-                probablities = 1 - probablities
+        probabilities = self._probabilities(subjective_fitnesses, maximize)
         # return the results from the NumPy choice function
-        return self.select_random(ranked, probablities)
+        return self.select_random(ranked, probabilities)
 
 
 # explicitly export classes

@@ -6,7 +6,7 @@ from pandas import DataFrame
 from .selection import Selector
 from .procreation import Procreator
 from .mutation import Mutator
-from .replacement import SurvivorSelector
+from .replacement import Replacer
 
 
 # the template string for the __repr__ method
@@ -26,7 +26,7 @@ class GeneticAlgorithm(object):
                  parent_selector: Selector,
                  procreator: Procreator,
                  mutator: Mutator,
-                 survivor_selector: SurvivorSelector,
+                 survivor_selector: Replacer,
                  maximize: bool=True):
         """
         Initialize a new Evolutionary aglorithm
@@ -40,13 +40,13 @@ class GeneticAlgorithm(object):
         """
         # type check parameters
         if not isinstance(parent_selector, Selector):
-            raise TypeError('parent_selector must be type Selector!')
+            raise TypeError('parent_selector must be of type: Selector')
         if not isinstance(procreator, Procreator):
-            raise TypeError('procreator must be type Procreator!')
+            raise TypeError('procreator must be of type: Procreator')
         if mutator is not None and not isinstance(mutator, Mutator):
-            raise TypeError('mutator must be type Mutator!')
-        if not isinstance(survivor_selector, SurvivorSelector):
-            raise TypeError('survivor_selector must be type SurvivorSelector!')
+            raise TypeError('mutator must be of type: Mutator')
+        if not isinstance(survivor_selector, Replacer):
+            raise TypeError('survivor_selector must be of type: Replacer')
         # assign instance members
         self.parent_selector = parent_selector
         self.procreator = procreator

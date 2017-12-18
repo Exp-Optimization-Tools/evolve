@@ -40,7 +40,7 @@ class init_ShouldInitializeOject(TestCase):
         GeneticAlgorithm(Selector(),
                          Procreator(),
                          Mutator(mutation_rate=1),
-                         SurvivorSelector())
+                         Replacer())
 
 
 class init_ShouldInitializeOjectWitNoMutator(TestCase):
@@ -48,7 +48,7 @@ class init_ShouldInitializeOjectWitNoMutator(TestCase):
         GeneticAlgorithm(Selector(),
                          Procreator(),
                          None,
-                         SurvivorSelector())
+                         Replacer())
 
 
 class init_ShouldRaiseErrorOnInvalidType0(TestCase):
@@ -57,7 +57,7 @@ class init_ShouldRaiseErrorOnInvalidType0(TestCase):
             GeneticAlgorithm('asdf',
                              Procreator(),
                              Mutator(mutation_rate=1),
-                             SurvivorSelector())
+                             Replacer())
 
 
 class init_ShouldRaiseErrorOnInvalidType1(TestCase):
@@ -66,7 +66,7 @@ class init_ShouldRaiseErrorOnInvalidType1(TestCase):
             GeneticAlgorithm(Selector(),
                              'asdf',
                              Mutator(mutation_rate=1),
-                             SurvivorSelector())
+                             Replacer())
 
 
 class init_ShouldRaiseErrorOnInvalidType2(TestCase):
@@ -75,7 +75,7 @@ class init_ShouldRaiseErrorOnInvalidType2(TestCase):
             GeneticAlgorithm(Selector(),
                              Procreator(),
                              'asdf',
-                             SurvivorSelector())
+                             Replacer())
 
 
 class init_ShouldRaiseErrorOnInvalidType3(TestCase):

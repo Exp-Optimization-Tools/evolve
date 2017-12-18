@@ -2,10 +2,10 @@
 from typing import Union, List
 from numpy import ndarray
 from evolve.population import Chromosome
-from .survivor_selector import SurvivorSelector
+from .replacer import Replacer
 
 
-class GenerationalSurvivorSelector(SurvivorSelector):
+class GenerationalSurvivorSelector(Replacer):
     """A class for selecting survivors generationally."""
 
     def select(self,

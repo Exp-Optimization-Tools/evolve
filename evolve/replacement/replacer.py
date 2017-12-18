@@ -1,12 +1,12 @@
-"""A module containing the survivor selector abstract base class."""
+"""A module containing the replacer abstract base class."""
 from typing import Union, List
 from numpy import ndarray
 from abc import abstractmethod
 from evolve.population import Chromosome
 
 
-class SurvivorSelector:
-    """An abstract base class for survivor selectors."""
+class Replacer(object):
+    """An abstract base class for survivor replacer."""
 
     def __repr__(self):
         """Return a string representation of this object."""
@@ -36,5 +36,5 @@ class SurvivorSelector:
 
 # explicitly specify exports
 __all__ = [
-    'SurvivorSelector'
+    'Replacer'
 ]

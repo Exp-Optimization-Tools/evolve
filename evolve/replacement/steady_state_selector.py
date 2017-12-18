@@ -3,10 +3,10 @@ from typing import Union, List
 from numpy import ndarray
 from numba import jit
 from evolve.population import Chromosome
-from .survivor_selector import SurvivorSelector
+from .replacer import Replacer
 
 
-class SteadyStateSurvivorSelector(SurvivorSelector):
+class SteadyStateSurvivorSelector(Replacer):
     """A class for selecting survivors using steady state replacement."""
 
     def __init__(self, size: int):

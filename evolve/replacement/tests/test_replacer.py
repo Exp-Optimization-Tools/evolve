@@ -1,7 +1,7 @@
 """A module with test code for the survivor_selector module."""
 from unittest import TestCase
 from numpy import array
-from ..survivor_selector import *
+from ..replacer import *
 
 
 #
@@ -11,7 +11,7 @@ from ..survivor_selector import *
 
 class init_ShouldInstantiate(TestCase):
     def test(self):
-        SurvivorSelector()
+        Replacer()
 
 
 #
@@ -21,46 +21,46 @@ class init_ShouldInstantiate(TestCase):
 
 class select_ShouldRaiseErrorMissingParameters0(TestCase):
     def test(self):
-        sel = SurvivorSelector()
+        sel = Replacer()
         with self.assertRaises(TypeError):
             sel.select([])
 
 
 class select_ShouldRaiseErrorMissingParameters1(TestCase):
     def test(self):
-        sel = SurvivorSelector()
+        sel = Replacer()
         with self.assertRaises(TypeError):
             sel.select([], [])
 
 
 class select_ShouldSelect0(TestCase):
     def test(self):
-        sel = SurvivorSelector()
+        sel = Replacer()
         sel.select([], [], [])
 
 
 class select_ShouldSelect1(TestCase):
     def test(self):
-        sel = SurvivorSelector()
+        sel = Replacer()
         sel.select(array([]), array([]), array([]))
 
 
 class select_ShouldRaiseErrorInvalidParameter0(TestCase):
     def test(self):
-        sel = SurvivorSelector()
+        sel = Replacer()
         with self.assertRaises(TypeError):
             sel.select('asdf', [], [])
 
 
 class select_ShouldRaiseErrorInvalidParameter1(TestCase):
     def test(self):
-        sel = SurvivorSelector()
+        sel = Replacer()
         with self.assertRaises(TypeError):
             sel.select([], 'asdf', [])
 
 
 class select_ShouldRaiseErrorInvalidParameter2(TestCase):
     def test(self):
-        sel = SurvivorSelector()
+        sel = Replacer()
         with self.assertRaises(TypeError):
             sel.select([], [], 'asdf')

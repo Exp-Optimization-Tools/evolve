@@ -142,7 +142,7 @@ class ShouldCreateZerosChromosomeFromFactory(TestCase):
     def test(self):
         np.random.seed(2)
         factory = ChromosomeFactory(5, dummy_decode, dummy_evaluate, zeros)
-        actual = factory.next_chromosome.allelesg
+        actual = factory.next_chromosome.alleles
         expected = np.array([0, 0, 0, 0, 0])
         self.assertTrue(np.array_equiv(expected, actual))
 

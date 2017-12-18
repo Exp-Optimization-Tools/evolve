@@ -12,7 +12,7 @@ class Chromosome(object):
     # class toggle for whether to use the fitness cache
     is_fitness_cache_enabled = True
 
-    # the private repr template string for the class
+    # the private representation template string for the class (repr)
     _template = '{}(alleles={}, decode={}, evaluate={})'
 
     def __init__(self,
@@ -28,7 +28,7 @@ class Chromosome(object):
             decode: a method that converts the gene set to a candidate solution
             evaluate: a method that evaluates fitness of candidate solutions
         """
-        # Ingore all type checking, this module is private to the framework
+        # Ignore all type checking, this module is private to the framework
         self.alleles = alleles
         self.decode = decode
         self.evaluate = evaluate
@@ -52,7 +52,7 @@ class Chromosome(object):
         Return a boolean determining in the gene is present in this chromosome.
 
         Args:
-            gene: the gene to check for presense of
+            gene: the gene to check for presence of
                 Note: this does NOT check for alleles (values)
 
         Returns: true if gene is in the gene set, false otherwise
@@ -117,7 +117,7 @@ class Chromosome(object):
         """Return the candidate solution of this chromosome (the phenotype)."""
         # check if caching candidate solutions is enabled
         if self.is_phenotype_cache_enabled:
-            # check if the cache was intialized yet
+            # check if the cache was initialized yet
             if self._phenotype_cache is None:
                 # initialize the cache by decoding
                 self._phenotype_cache = self.decode(self.alleles)
@@ -131,13 +131,13 @@ class Chromosome(object):
         """Evaluate and return a fitness for the chromosome."""
         # check if caching fitness is enabled
         if self.is_fitness_cache_enabled:
-            # check if the cache was intialized yet
+            # check if the cache was initialized yet
             if self._fitness_cache is None:
                 # initialize the cache by decoding
                 self._fitness_cache = self.evaluate(self.phenotype)
             # return the cached candidate solution
             return self._fitness_cache
-        # ignore all cache features, evalaute the candidate solution and return
+        # ignore all cache features, evaluate the candidate solution and return
         return self.evaluate(self.phenotype)
 
 

@@ -170,6 +170,13 @@ class subscript_ShouldFetch(TestCase):
         self.assertTrue(np.array_equiv(np.array([1, 1, 1]), arb[0:3]))
 
 
+class subscript_ShouldIterate(TestCase):
+    def test(self):
+        arb = arb_chromosome()
+        for allele in arb:
+            self.assertEqual(1, allele)
+
+
 #
 # MARK: in keyword functionality (contains)
 #
@@ -183,6 +190,7 @@ class key_in_ShouldReturn(TestCase):
         self.assertIn(1, arb)
         self.assertIn(2, arb)
         self.assertNotIn(3, arb)
+
 
 #
 # MARK: class variables

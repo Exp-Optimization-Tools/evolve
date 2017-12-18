@@ -3,10 +3,10 @@ from typing import Callable
 from tqdm import tqdm
 from numpy import array
 from pandas import DataFrame
-from .operators.selection import Selector
-from .operators.procreation import Procreator
-from .operators.mutation import Mutator
-from .operators.replacement import Replacer
+from evolve.operators.selection import Selector
+from evolve.operators.procreation import Procreator
+from evolve.operators.mutation import Mutator
+from evolve.operators.replacement import Replacer
 
 
 # the template string for the __repr__ method
@@ -92,8 +92,6 @@ class GeneticAlgorithm(object):
             callback(population, iteration)
         return children
 
-    # TODO: use __call__ instead of evolve. more pythonic given that the class
-    # is called GeneticAlgorithm implying that it is callable
     def __call__(self,
                  population: list,
                  iterations: int=2000,
@@ -128,28 +126,6 @@ class GeneticAlgorithm(object):
         """Return the fitnesses of the evaluated chromosomes."""
         return array([ind.fitness for ind in self.evaluated])
 
-    def fitness_metrics(self, name: str='GeneticAlgorithm'):
-        """Return a dataframe of fitness metrics over the evolution."""
-        # calculate the midpoint of the index of evaluated indexes
-        mid = int(len(self.evaluated) / 2)
-        # split the evaluated fitnesses into groups: first half, second half,
-        # total
-        groups = [
-            self.evaluated_fitnesses[:mid],
-            self.evaluated_fitnesses[mid:],
-            self.evaluated_fitnesses
-        ]
-        group_names = [
-            '[0,{})'.format(mid),
-            '[{},{})'.format(mid, len(self.evaluated)),
-            'total'
-        ]
-        column_count = len(groups) * 2
-        columns = array([('$\mu_{{{}}}$'.format(group_name), '$\sigma_{{{}}}$'.format(group_name)) for group_name in group_names]).reshape(column_count)
-        metrics = array([(group.mean(), group.std()) for group in groups]).reshape(-1, column_count)
-        # generate metrics for each group and return the dataframe formatted
-        # with the metrics, index, and column names
-        return DataFrame(metrics, columns=columns, index=[name])
 
 # explicitly specify exports from module
 __all__ = [

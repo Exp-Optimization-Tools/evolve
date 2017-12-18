@@ -14,12 +14,11 @@ the subset of items that fits in the container such that the value of the
 subset is maximized.
 """
 from unittest import TestCase
-from evolve.ga import GeneticAlgorithm
+import numpy as np
+from numpy.random import seed
 from evolve.operators import *
 from evolve.population import *
-import numpy as np
-from random import shuffle
-from numpy.random import seed
+from ..ga import GeneticAlgorithm
 
 
 class KnapsackTestCase(TestCase):

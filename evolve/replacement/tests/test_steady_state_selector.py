@@ -1,6 +1,6 @@
 """A module with test code for the mu_mu_selector module."""
 from unittest import TestCase
-from ..steady_state_selector import *
+from ..steady_state_replacer import *
 
 
 #

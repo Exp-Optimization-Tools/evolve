@@ -5,10 +5,10 @@ This module contains a class for tournament parent selection.
 """
 from typing import Union
 from numpy import ndarray, random
-from .parent_selector import ParentSelector
+from .selector import Selector
 
 
-class TournamentSelector(ParentSelector):
+class TournamentSelector(Selector):
     """A class for performing tournament parent selection."""
 
     def __init__(self,

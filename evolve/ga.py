@@ -3,7 +3,7 @@ from typing import Callable
 from tqdm import tqdm
 from numpy import array
 from pandas import DataFrame
-from .selection import ParentSelector
+from .selection import Selector
 from .procreation import Procreator
 from .mutation import Mutator
 from .replacement import SurvivorSelector
@@ -23,7 +23,7 @@ class GeneticAlgorithm(object):
     """An implementation of the generalized genetic algorithm."""
 
     def __init__(self,
-                 parent_selector: ParentSelector,
+                 parent_selector: Selector,
                  procreator: Procreator,
                  mutator: Mutator,
                  survivor_selector: SurvivorSelector,
@@ -39,8 +39,8 @@ class GeneticAlgorithm(object):
             maximize: whether to maximize the evaluation function (default True)
         """
         # type check parameters
-        if not isinstance(parent_selector, ParentSelector):
-            raise TypeError('parent_selector must be type ParentSelector!')
+        if not isinstance(parent_selector, Selector):
+            raise TypeError('parent_selector must be type Selector!')
         if not isinstance(procreator, Procreator):
             raise TypeError('procreator must be type Procreator!')
         if mutator is not None and not isinstance(mutator, Mutator):

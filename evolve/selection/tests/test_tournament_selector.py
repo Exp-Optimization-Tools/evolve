@@ -2,7 +2,7 @@
 import unittest
 from numpy import array, ndarray
 from evolve.population import BinaryChromosome, ChromosomeFactory
-from ..parent_selector import ParentSelector
+from ..selector import Selector
 from ..tournament_selector import *
 from numpy.random import seed
 
@@ -38,9 +38,9 @@ class TournamentSelectorTestCase(unittest.TestCase):
 #
 
 
-class ShouldInstantiateParentSelector(TournamentSelectorTestCase):
+class ShouldInstantiateSelector(TournamentSelectorTestCase):
     def runTest(self):
-        self.assertTrue(isinstance(TournamentSelector(), ParentSelector))
+        self.assertTrue(isinstance(TournamentSelector(), Selector))
         self.assertTrue(isinstance(TournamentSelector(), TournamentSelector))
 
 

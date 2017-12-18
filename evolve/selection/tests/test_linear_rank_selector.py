@@ -2,7 +2,7 @@
 import unittest
 from numpy import array, ndarray
 from evolve.population import BinaryChromosome, ChromosomeFactory
-from ..parent_selector import ParentSelector
+from ..selector import Selector
 from ..linear_rank_selector import *
 
 
@@ -39,7 +39,7 @@ class LinearRankSelectorTestCase(unittest.TestCase):
 
 class ShouldInstantiateLinearRankSelelctor(LinearRankSelectorTestCase):
     def runTest(self):
-        self.assertTrue(isinstance(LinearRankSelector(), ParentSelector))
+        self.assertTrue(isinstance(LinearRankSelector(), Selector))
         self.assertTrue(isinstance(LinearRankSelector(), LinearRankSelector))
 
 

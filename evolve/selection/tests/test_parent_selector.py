@@ -1,16 +1,7 @@
 """This module tests the parent_selector module."""
-import unittest
+from unittest import TestCase
 from numpy import array
-from ..parent_selector import *
-
-
-#
-# MARK: Abstract Base Class
-#
-
-
-class ParentSelectorTestCase(unittest.TestCase):
-    pass
+from ..selector import Selector
 
 
 #
@@ -18,37 +9,37 @@ class ParentSelectorTestCase(unittest.TestCase):
 #
 
 
-class ShouldInstantiateParentSelector(ParentSelectorTestCase):
+class ShouldInstantiateSelector(TestCase):
     def runTest(self):
-        self.assertTrue(isinstance(ParentSelector(), ParentSelector))
+        self.assertTrue(isinstance(Selector(), Selector))
 
 
-class ShouldRaiseErrorOnInvalidSizeType(ParentSelectorTestCase):
+class ShouldRaiseErrorOnInvalidSizeType(TestCase):
     def runTest(self):
         with self.assertRaises(TypeError):
-            ParentSelector(size='asdf')
+            Selector(size='asdf')
 
 
-class ShouldRaiseErrorOnInvalidSizeBelowBounds(ParentSelectorTestCase):
+class ShouldRaiseErrorOnInvalidSizeBelowBounds(TestCase):
     def runTest(self):
         with self.assertRaises(ValueError):
-            ParentSelector(size=-1)
+            Selector(size=-1)
 
 
-class ShouldInstantiateParentSelectorSize0(ParentSelectorTestCase):
+class ShouldInstantiateSelectorSize0(TestCase):
     def runTest(self):
-        self.assertTrue(isinstance(ParentSelector(size=0), ParentSelector))
+        self.assertTrue(isinstance(Selector(size=0), Selector))
 
 
-class ShouldRaiseErrorOnInvalidReplaceType(ParentSelectorTestCase):
+class ShouldRaiseErrorOnInvalidReplaceType(TestCase):
     def runTest(self):
         with self.assertRaises(TypeError):
-            ParentSelector(replace='asdf')
+            Selector(replace='asdf')
 
 
-class ShouldInstantiateParentSelectorReplaceTrue(ParentSelectorTestCase):
+class ShouldInstantiateSelectorReplaceTrue(TestCase):
     def runTest(self):
-        self.assertTrue(isinstance(ParentSelector(replace=True), ParentSelector))
+        self.assertTrue(isinstance(Selector(replace=True), Selector))
 
 
 #
@@ -56,20 +47,20 @@ class ShouldInstantiateParentSelectorReplaceTrue(ParentSelectorTestCase):
 #
 
 
-class ShouldRaiseErrorOnInvalidPopulationWrongType(ParentSelectorTestCase):
+class ShouldRaiseErrorOnInvalidPopulationWrongType(TestCase):
     def runTest(self):
-        sel = ParentSelector()
+        sel = Selector()
         with self.assertRaises(TypeError):
             sel.select('asdfasdfasdf')
 
 
-class ShouldNotRaiseErrorOnValidPopulationList(ParentSelectorTestCase):
+class ShouldNotRaiseErrorOnValidPopulationList(TestCase):
     def runTest(self):
-        sel = ParentSelector()
+        sel = Selector()
         self.assertIsNone(sel.select([]))
 
 
-class ShouldNotRaiseErrorOnValidPopulationArray(ParentSelectorTestCase):
+class ShouldNotRaiseErrorOnValidPopulationArray(TestCase):
     def runTest(self):
-        sel = ParentSelector()
+        sel = Selector()
         self.assertIsNone(sel.select(array([])))

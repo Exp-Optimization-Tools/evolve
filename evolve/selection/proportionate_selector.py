@@ -7,10 +7,10 @@ The proportionate selector is susceptible to:
 """
 from typing import Union
 from numpy import ndarray, sum, random
-from .parent_selector import ParentSelector
+from .selector import Selector
 
 
-class ProportionateSelector(ParentSelector):
+class ProportionateSelector(Selector):
     """A class for performing proportionate parent selection."""
 
     def select(self, population: Union[list, ndarray], maximize=True):

@@ -6,10 +6,10 @@ The proportionate selector is susceptible to:
 """
 from typing import Union
 from numpy import ndarray, sum, random
-from .parent_selector import ParentSelector
+from .selector import Selector
 
 
-class LinearRankSelector(ParentSelector):
+class LinearRankSelector(Selector):
     """A class for performing linear rank parent selection."""
 
     def select(self, population: Union[list, ndarray], maximize=True):
@@ -18,7 +18,7 @@ class LinearRankSelector(ParentSelector):
 
         Args:
             population: the list of Chromosomes to select from
-            maximize: whether to maxmimize or minimize fitness (default True)
+            maximize: whether to maximize or minimize fitness (default True)
         """
         # call super to check the super parameters
         super(LinearRankSelector, self).select(population)
@@ -41,12 +41,12 @@ class LinearRankSelector(ParentSelector):
         # if the sum is 0, the selection is random
         if sum(ranked_scores) == 0:
             return random.choice(population, size=self.size, replace=self.replace)
-        # generate probablities from the subject ranks
+        # generate probabilities from the subject ranks
         probablities = ranked_scores / sum(ranked_scores)
         # if were minimizing, invert the probabilities about 1
         if not maximize:
             probablities = 1 - probablities
-        # return the results from the numpy choice function
+        # return the results from the NumPy choice function
         return random.choice(population, size=self.size, replace=self.replace, p=probablities)
 
 

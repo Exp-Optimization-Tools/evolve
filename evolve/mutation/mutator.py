@@ -1,4 +1,4 @@
-"""This module contains the mutation procreator abstract base class."""
+"""This module contains the mutation abstract base class."""
 from typing import Union, List
 from abc import abstractmethod
 from evolve.population import Chromosome
@@ -9,10 +9,10 @@ class Mutator:
 
     def __init__(self, mutation_rate: float):
         """
-        Intanstiate a new mutations procreator abstract base class
+        Instantiate a new mutator abstract base class
 
         Args:
-            mutation_rate: the mutation rate for the procreator
+            mutation_rate: the mutation rate for the mutator
         """
         # make sure the mutation rate is a number
         if not isinstance(mutation_rate, (float, int)):

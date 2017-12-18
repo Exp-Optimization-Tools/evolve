@@ -2,7 +2,7 @@
 import unittest
 from numpy import array, ndarray
 from evolve.population import BinaryChromosome, ChromosomeFactory
-from ..parent_selector import ParentSelector
+from ..selector import Selector
 from ..proportionate_selector import *
 
 
@@ -30,7 +30,7 @@ class ProportionateSelectorTestCase(unittest.TestCase):
 
 class ShouldInstantiateProportionateSelector(ProportionateSelectorTestCase):
     def runTest(self):
-        self.assertTrue(isinstance(ProportionateSelector(), ParentSelector))
+        self.assertTrue(isinstance(ProportionateSelector(), Selector))
         self.assertTrue(isinstance(ProportionateSelector(), ProportionateSelector))
 
 

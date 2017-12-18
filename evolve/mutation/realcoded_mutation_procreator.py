@@ -1,18 +1,18 @@
-"""This module contains the realcoded mutation procreator class."""
+"""This module contains the real-coded mutation class."""
 from numpy import array
 from numpy.random import random_sample
 from .mutator import Mutator
 
 
 class RealCodedMutationProcreator(Mutator):
-    """This class performs realcoded mutation on parents."""
+    """This class performs real-coded mutation on parents."""
 
     def __init__(self, mutation_rate: float, random_state=(0, 1)):
         """
-        Intanstiate a new real coded mutation procreator.
+        Instantiate a new real coded mutator.
 
         Args:
-            mutation_rate: the mutation rate for the procreator
+            mutation_rate: the mutation rate for the mutator
             random_state: the range of random states to generate numbers in
         """
         super(RealCodedMutationProcreator, self).__init__(mutation_rate)
@@ -35,7 +35,7 @@ class RealCodedMutationProcreator(Mutator):
 
     def mutate(self, individual, inplace=False):
         """Return a mutated copy of the individual."""
-        # super type checks individual and inplace
+        # super type checks individual and in-place
         super(RealCodedMutationProcreator, self).mutate(individual, inplace)
         # if it's a list or array, iterate over all the items
         if isinstance(individual, list):

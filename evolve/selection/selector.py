@@ -1,10 +1,10 @@
 """This module contains the abstract base class for parent selection."""
-import abc
+from abc import abstractmethod
 from typing import Union
 from numpy import ndarray
 
 
-class ParentSelector:
+class Selector:
     """An abstract base class outlining the API for parent selection"""
 
     def __init__(self, size: int=None, replace: bool=True):
@@ -36,7 +36,7 @@ class ParentSelector:
             self.replace
         ])
 
-    @abc.abstractmethod
+    @abstractmethod
     def select(self, population: Union[list, ndarray]):
         """
         Select a subset from the population.
@@ -45,10 +45,10 @@ class ParentSelector:
             population: the list of Chromosomes to select from
         """
         if not isinstance(population, (list, ndarray)):
-            raise TypeError('population should be one of type: array, list')
+            raise TypeError('population should be one of types: array, list')
 
 
 # explicitly export classes
 __all__ = [
-    'ParentSelector'
+    'Selector'
 ]

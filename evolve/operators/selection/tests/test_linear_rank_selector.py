@@ -1,6 +1,6 @@
 """This module tests the linear_rank_selector module."""
 import unittest
-from numpy import array, ndarray
+from numpy import ndarray
 from evolve.population_new import ChromosomeFactory
 from evolve.population_new.factory import zeros, ones, random_sample
 from ..selector import Selector

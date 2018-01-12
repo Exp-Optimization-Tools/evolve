@@ -35,17 +35,17 @@ To run the test modules inside the [src][] package:
 make test
 ```
 
-# How Should I Cite Evolve?
+# How Should I Cite `evolve`?
 
-Please cite `Evolve` if you use it in your reseach using the following block:
+Please cite `evolve` if you use it in your research using the following block:
 
 ```latex
-@misc{kauten2017evolve,
+@misc{kauten2018evolve,
   author = {Christian Kauten},
-  title = {Evolve},
-  year = {2017},
+  title = {evolve},
+  year = {2018},
   publisher = {GitHub},
-  howpublished = {\url{https://github.com/Kautenja/Evolve}},
+  howpublished = {\url{https://github.com/Kautenja/evolve}},
 }
 ```
 
